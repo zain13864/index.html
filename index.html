@@ -1,0 +1,1127 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>مركز مكافحة الجرائم الإلكترونية | C.A.D</title>
+    
+    <!-- Google Font: Cairo -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --primary-blue: #0B2D48;
+            --turquoise: #00C9E0;
+            --silver: #C0C0C0;
+            --dark-bg: #061826;
+            --card-bg: rgba(11, 45, 72, 0.7);
+            --text-light: #F0F4F8;
+            --body-bg: var(--dark-bg);
+            --text-color: var(--text-light);
+            --input-bg: rgba(6, 24, 38, 0.8);
+            --header-bg: rgba(11, 45, 72, 0.95);
+        }
+
+        [data-theme="light"] {
+            --body-bg: #f4f7f9;
+            --text-color: #0b2d48;
+            --card-bg: rgba(255, 255, 255, 0.9);
+            --input-bg: #ffffff;
+            --header-bg: rgba(255, 255, 255, 0.95);
+            --silver: #4a5568;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--body-bg);
+            color: var(--text-color);
+            overflow-x: hidden;
+            line-height: 1.6;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Matrix Canvas Background */
+        #matrix-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.35;
+        }
+
+        /* Fixed Navigation Bar */
+        header {
+            position: fixed;
+            top: 0;
+            right: 0;
+            width: 100%;
+            background-color: var(--header-bg);
+            backdrop-filter: blur(8px);
+            border-bottom: 2px solid var(--turquoise);
+            z-index: 1000;
+            box-shadow: 0 4px 20px rgba(0, 201, 224, 0.15);
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 10px 20px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+        }
+
+        .logo-svg {
+            height: 50px;
+            width: 50px;
+            filter: drop-shadow(0 0 6px rgba(0, 201, 224, 0.4));
+        }
+
+        .logo-text {
+            color: var(--text-color);
+            font-weight: 700;
+            font-size: 1.1rem;
+            line-height: 1.2;
+        }
+
+        .logo-text span {
+            color: var(--turquoise);
+            font-size: 0.85rem;
+            display: block;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--silver);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--turquoise);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--turquoise);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .theme-toggle {
+            background: transparent;
+            border: 1px solid var(--turquoise);
+            color: var(--turquoise);
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background: var(--turquoise);
+            color: var(--primary-blue);
+            box-shadow: 0 0 10px rgba(0, 201, 224, 0.4);
+        }
+
+        .menu-btn {
+            display: none;
+            color: var(--turquoise);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Sections General */
+        section {
+            padding: 100px 20px 60px;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            color: var(--turquoise);
+            margin-bottom: 40px;
+            position: relative;
+            font-weight: 800;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 70px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--turquoise), var(--primary-blue));
+            margin: 10px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Hero / Home Section */
+        #home {
+            text-align: center;
+            align-items: center;
+            padding-top: 140px;
+        }
+
+        .hero-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--text-color);
+            text-shadow: 0 0 10px rgba(0, 201, 224, 0.4);
+        }
+
+        .hero-subtitle {
+            font-size: 1.3rem;
+            color: var(--silver);
+            max-width: 800px;
+            margin-bottom: 35px;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(45deg, var(--primary-blue), var(--turquoise));
+            color: #fff;
+            padding: 14px 35px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(0, 201, 224, 0.3);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            border: 1px solid var(--turquoise);
+        }
+
+        .cta-btn:hover {
+            transform: scale(1.03) translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 201, 224, 0.6);
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .about-card {
+            background: var(--card-bg);
+            border: 1px solid rgba(0, 201, 224, 0.2);
+            padding: 30px;
+            border-radius: 12px;
+            backdrop-filter: blur(5px);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .about-card:hover {
+            transform: scale(1.03) translateY(-5px);
+            border-color: var(--turquoise);
+            box-shadow: 0 10px 25px rgba(0, 201, 224, 0.25);
+        }
+
+        .about-card i {
+            font-size: 2.5rem;
+            color: var(--turquoise);
+            margin-bottom: 15px;
+        }
+
+        .about-card h3 {
+            font-size: 1.4rem;
+            margin-bottom: 10px;
+            color: var(--text-color);
+        }
+
+        /* Services Section */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+        }
+
+        .service-box {
+            background: var(--card-bg);
+            border: 1px solid rgba(192, 192, 192, 0.1);
+            padding: 25px;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .service-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--turquoise);
+        }
+
+        .service-box:hover {
+            transform: scale(1.03) translateY(-5px);
+            border-color: var(--turquoise);
+            box-shadow: 0 10px 25px rgba(0, 201, 224, 0.3);
+        }
+
+        .service-box i {
+            font-size: 2.2rem;
+            color: var(--turquoise);
+            margin-bottom: 15px;
+        }
+
+        .service-box h3 {
+            color: var(--text-color);
+            margin-bottom: 10px;
+        }
+
+        .reveal-item {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .reveal-item.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Report Form Section */
+        .form-container {
+            background: var(--card-bg);
+            border: 1px solid var(--turquoise);
+            padding: 40px;
+            border-radius: 15px;
+            max-width: 750px;
+            margin: 0 auto;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--silver);
+        }
+
+        .form-group label .required {
+            color: #ff4d4d;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            background: var(--input-bg);
+            border: 1px solid rgba(0, 201, 224, 0.3);
+            border-radius: 8px;
+            color: var(--text-color);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s, background-color 0.3s, color 0.3s;
+        }
+
+        .form-control option {
+            background-color: var(--primary-blue);
+            color: #fff;
+        }
+
+        [data-theme="light"] .form-control option {
+            background-color: #ffffff;
+            color: #0b2d48;
+        }
+
+        .form-control:focus {
+            border-color: var(--turquoise);
+            box-shadow: 0 0 8px rgba(0, 201, 224, 0.3);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .file-input-wrapper {
+            position: relative;
+        }
+
+        .file-input-wrapper input[type="file"] {
+            display: none;
+        }
+
+        .file-custom-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 15px;
+            background: var(--input-bg);
+            border: 1px dashed var(--turquoise);
+            border-radius: 8px;
+            color: var(--silver);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .file-custom-btn:hover {
+            border-style: solid;
+            background: rgba(0, 201, 224, 0.1);
+            color: var(--turquoise);
+        }
+
+        .file-names-preview {
+            margin-top: 8px;
+            font-size: 0.85rem;
+            color: var(--turquoise);
+            word-break: break-all;
+        }
+
+        .error-message {
+            color: #ff4d4d;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .form-group.invalid .error-message {
+            display: flex;
+        }
+
+        .form-group.invalid .form-control,
+        .form-group.invalid .file-custom-btn {
+            border-color: #ff4d4d;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: #25D366; /* WhatsApp Color */
+            color: #fff;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: background 0.3s, transform 0.2s;
+        }
+
+        .submit-btn:hover {
+            background: #1ebc57;
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:disabled {
+            background: #6c757d;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(6, 24, 38, 0.85);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-box {
+            background: var(--primary-blue);
+            border: 2px solid var(--turquoise);
+            padding: 35px 25px;
+            border-radius: 16px;
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 0 30px rgba(0, 201, 224, 0.4);
+            transform: scale(0.8);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: scale(1);
+        }
+
+        .modal-icon {
+            font-size: 3.5rem;
+            color: #25D366;
+            margin-bottom: 15px;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .modal-code-box {
+            background: rgba(0, 201, 224, 0.1);
+            border: 1px dashed var(--turquoise);
+            padding: 12px;
+            border-radius: 8px;
+            margin: 15px 0;
+            font-weight: 800;
+            font-size: 1.3rem;
+            color: var(--turquoise);
+            letter-spacing: 1px;
+        }
+
+        .modal-desc {
+            color: var(--silver);
+            font-size: 0.95rem;
+        }
+
+        /* Contact Section */
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+            text-align: center;
+        }
+
+        .contact-item {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid rgba(192, 192, 192, 0.2);
+            min-width: 250px;
+        }
+
+        .contact-item i {
+            font-size: 2rem;
+            color: var(--turquoise);
+            margin-bottom: 10px;
+        }
+
+        .contact-item h3 {
+            color: var(--text-color);
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--primary-blue);
+            border-top: 1px solid rgba(0, 201, 224, 0.2);
+            text-align: center;
+            padding: 20px;
+            color: var(--silver);
+            font-size: 0.9rem;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 77px;
+                right: -100%;
+                width: 100%;
+                height: calc(100vh - 77px);
+                background-color: var(--primary-blue);
+                flex-direction: column;
+                align-items: center;
+                padding-top: 40px;
+                transition: 0.4s ease;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .form-container {
+                padding: 25px 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Canvas Background -->
+    <canvas id="matrix-canvas"></canvas>
+
+    <!-- Header / Navbar -->
+    <header>
+        <div class="navbar">
+            <a href="#home" class="logo-container">
+                <svg class="logo-svg" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <defs>
+                        <linearGradient id="shieldGradLeft" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#0B2D48" />
+                            <stop offset="100%" stop-color="#00C9E0" />
+                        </linearGradient>
+                        <linearGradient id="shieldGradRight" x1="0%" y1="0%" x2="100%" y2="100%">
+                            <stop offset="0%" stop-color="#E0E0E0" />
+                            <stop offset="100%" stop-color="#808080" />
+                        </linearGradient>
+                        <linearGradient id="centerGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                            <stop offset="0%" stop-color="#00C9E0" />
+                            <stop offset="100%" stop-color="#0B2D48" />
+                        </linearGradient>
+                    </defs>
+                    <path d="M50 5 L10 20 V50 C10 75 50 95 50 95 Z" fill="url(#shieldGradLeft)" />
+                    <path d="M50 5 L90 20 V50 C90 75 50 95 50 95 Z" fill="url(#shieldGradRight)" />
+                    <path d="M50 12 L18 24 V50 C18 70 50 86 50 86 C50 86 82 70 82 50 V24 Z" fill="#061826" />
+                    <path d="M50 22 L30 65 L42 65 L50 42 L58 65 L70 65 Z" fill="url(#centerGrad)" stroke="#00C9E0" stroke-width="1.5"/>
+                    <path d="M35 38 L25 55 L35 55 Z" fill="#00C9E0"/>
+                    <path d="M65 38 L75 55 L65 55 Z" fill="#C0C0C0"/>
+                </svg>
+                
+                <div class="logo-text">
+                    مركز مكافحة الجرائم الإلكترونية
+                    <span>Cybercrime Anti-Defense - C.A.D</span>
+                </div>
+            </a>
+
+            <div class="nav-controls">
+                <button class="theme-toggle" id="theme-toggle" title="تبديل الوضع">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="menu-btn" id="menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+
+            <ul class="nav-links" id="nav-links">
+                <li><a href="#home" class="active">الرئيسية</a></li>
+                <li><a href="#about">من نحن</a></li>
+                <li><a href="#services">خدماتنا</a></li>
+                <li><a href="#report">تقديم بلاغ</a></li>
+                <li><a href="#contact">تواصل معنا</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- Home / Hero Section -->
+    <section id="home">
+        <h1 class="hero-title">مركز مكافحة الجرائم الإلكترونية (C.A.D)</h1>
+        <p class="hero-subtitle">الحماية والأمان لبياناتك وحقوقك في العالم الرقمي. نساعدك في التصدّي للااختراقات، الاحتيال المالي، والابتزاز الإلكتروني بأعلى درجات السرية والاحترافية.</p>
+        <div>
+            <a href="#report" class="cta-btn">
+                <i class="fas fa-shield-halved"></i> تقديم بلاغ فوري
+            </a>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2 class="section-title">من نحن</h2>
+        <div class="about-grid">
+            <div class="about-card">
+                <i class="fas fa-user-shield"></i>
+                <h3>رؤيتنا</h3>
+                <p>بناء فضاء رقمي آمن لكل المستخدمين، والحد من انتشار الجرائم الإلكترونية من خلال توفير الدعم الفني والاستشاري المتقدم.</p>
+            </div>
+            <div class="about-card">
+                <i class="fas fa-lock"></i>
+                <h3>السرية التامة</h3>
+                <p>نضمن التعامل مع كافة البلاغات والمعلومات الواردة إلينا بأعلى معايير الخصوصية والأمان والتشفير.</p>
+            </div>
+            <div class="about-card">
+                <i class="fas fa-microchip"></i>
+                <h3>خبرات متخصصة</h3>
+                <p>فريقنا يمتلك الخبرات التقنية اللازمة للتعامل مع مختلف أنواع التهديدات والأحداث السيبرانية المعقدة.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services">
+        <h2 class="section-title">خدماتنا</h2>
+        <div class="services-grid">
+            <div class="service-box">
+                <i class="fas fa-user-ninja"></i>
+                <h3>مكافحة الابتزاز الإلكتروني</h3>
+                <p>تتبع وتقييم حالات الابتزاز وتأمين الحسابات المتضررة واسترجاعها.</p>
+            </div>
+            <div class="service-box">
+                <i class="fas fa-credit-card"></i>
+                <h3>تتبع الاحتيال المالي</h3>
+                <p>المساعدة في التعامل مع عمليات النصب والاحتيال عبر الإنترنت والبنوك الرقمية.</p>
+            </div>
+            <div class="service-box">
+                <i class="fas fa-bug"></i>
+                <h3>التحقيق الرقمي وفحص الاختراق</h3>
+                <p>كشف الثغرات والأنشطة المشبوهة على الأجهزة والحسابات الشخصية والشركات.</p>
+            </div>
+            <div class="service-box">
+                <i class="fas fa-network-wired"></i>
+                <h3>الاستشارات الأمنية</h3>
+                <p>تقديم حلول وقائية لحماية المؤسسات والأفراد من الهجمات السيبرانية.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Report Section -->
+    <section id="report">
+        <h2 class="section-title">تقديم بلاغ</h2>
+        <div class="form-container">
+            <form id="reportForm" novalidate>
+                <div class="form-group">
+                    <label for="fullName">الاسم الكامل <span class="required">*</span></label>
+                    <input type="text" id="fullName" class="form-control" placeholder="أدخل اسمك بالكامل">
+                    <div class="error-message"><i class="fas fa-circle-exclamation"></i> يرجى إدخال الاسم الكامل</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="contactPhone">رقم المبلغ للتواصل <span class="required">*</span></label>
+                    <input type="tel" id="contactPhone" class="form-control" placeholder="أدخل رقم هاتفك">
+                    <div class="error-message"><i class="fas fa-circle-exclamation"></i> يرجى إدخال رقم هاتف صحيح للتواصل</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="targetPhone">رقم المبلغ عليه (اختياري)</label>
+                    <input type="tel" id="targetPhone" class="form-control" placeholder="أدخل رقم الهاتف أو حساب الشخص المشتبه به إن وجد">
+                </div>
+
+                <div class="form-group">
+                    <label for="reportType">نوع البلاغ <span class="required">*</span></label>
+                    <select id="reportType" class="form-control">
+                        <option value="" disabled selected>اختر نوع البلاغ...</option>
+                        <option value="ابتزاز الكتروني">ابتزاز الكتروني</option>
+                        <option value="نصب واحتيال مالي">نصب واحتيال مالي</option>
+                        <option value="اختراق حسابات">اختراق حسابات</option>
+                        <option value="تشهير">تشهير</option>
+                        <option value="اخرى">اخرى</option>
+                    </select>
+                    <div class="error-message"><i class="fas fa-circle-exclamation"></i> يرجى اختيار نوع البلاغ</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="reportDetails">وصف البلاغ بالتفصيل <span class="required">*</span></label>
+                    <textarea id="reportDetails" class="form-control" placeholder="اكتب تفاصيل المشكلة أو الجريمة الإلكترونية هنا..."></textarea>
+                    <div class="error-message"><i class="fas fa-circle-exclamation"></i> يرجى كتابة تفاصيل البلاغ</div>
+                </div>
+
+                <div class="form-group">
+                    <label>إرفاق أدلة / صور / اسكرينات (اختياري)</label>
+                    <div class="file-input-wrapper">
+                        <input type="file" id="evidenceFiles" multiple accept="image/*,.pdf,.zip">
+                        <label for="evidenceFiles" class="file-custom-btn">
+                            <i class="fas fa-paperclip"></i>
+                            <span id="file-btn-text">اضغط هنا لإرفاق الملفات</span>
+                        </label>
+                    </div>
+                    <div class="file-names-preview" id="fileNamesPreview"></div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    <i class="fab fa-whatsapp"></i> <span id="submitBtnText">إرسال البلاغ عبر واتساب</span>
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <div class="modal-overlay" id="successModal">
+        <div class="modal-box">
+            <i class="fas fa-circle-check modal-icon"></i>
+            <h3 class="modal-title">تم استلام بلاغك بنجاح</h3>
+            <p style="color: var(--silver);">يرجى الاحتفاظ بكود البلاغ لمتابعته:</p>
+            <div class="modal-code-box" id="modalCodeDisplay">CAD-2026-XXXX</div>
+            <p class="modal-desc">جاري تحويلك إلى واتساب لبدء المحادثة المباشرة...</p>
+        </div>
+    </div>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2 class="section-title">تواصل معنا</h2>
+        <div class="contact-info">
+            <div class="contact-item">
+                <i class="fab fa-whatsapp"></i>
+                <h3>واتساب مباشر</h3>
+                <p style="direction: ltr;">+20 1210233693</p>
+            </div>
+            <div class="contact-item">
+                <i class="fas fa-shield-cat"></i>
+                <h3>مركز C.A.D</h3>
+                <p>دعم واستجابة سريعة للجرائم الرقمية</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>جميع الحقوق محفوظة &copy; 2026 - مركز مكافحة الجرائم الإلكترونية (C.A.D)</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // GOOGLE DRIVE UPLOAD SCRIPT URL
+        const GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwPcd5wFcIsISodg_5I5HLaUmr5UdeLcER0b0Rtd-AlLJj5C3R1Iepzax1RiTgJST845A/exec";
+
+        // Matrix Background Effect
+        const canvas = document.getElementById('matrix-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const chars = '01ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz@#$%&*';
+        const fontSize = 14;
+        let columns = Math.floor(canvas.width / fontSize);
+        let drops = Array(columns).fill(1);
+
+        function drawMatrix() {
+            ctx.fillStyle = 'rgba(6, 24, 38, 0.1)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#00C9E0';
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = chars.charAt(Math.floor(Math.random() * chars.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        setInterval(drawMatrix, 33);
+
+        // Mobile Menu Toggle
+        const menuBtn = document.getElementById('menu-btn');
+        const navLinks = document.getElementById('nav-links');
+
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            menuBtn.querySelector('i').classList.toggle('fa-bars');
+            menuBtn.querySelector('i').classList.toggle('fa-xmark');
+        });
+
+        // Close mobile menu on link click
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                if(menuBtn.querySelector('i').classList.contains('fa-xmark')) {
+                    menuBtn.querySelector('i').classList.add('fa-bars');
+                    menuBtn.querySelector('i').classList.remove('fa-xmark');
+                }
+            });
+        });
+
+        // Active Navigation Item Highlight on Scroll
+        window.addEventListener('scroll', () => {
+            let current = '';
+            const sections = document.querySelectorAll('section');
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                if (pageYOffset >= (sectionTop - 150)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            document.querySelectorAll('.nav-links a').forEach(a => {
+                a.classList.remove('active');
+                if (a.getAttribute('href').includes(current)) {
+                    a.classList.add('active');
+                }
+            });
+        });
+
+        // Dark/Light Mode Switcher Logic
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = themeToggleBtn.querySelector('i');
+        const savedTheme = localStorage.getItem('cad_theme') || 'dark';
+
+        function applyTheme(theme) {
+            if (theme === 'light') {
+                document.documentElement.setAttribute('data-theme', 'light');
+                themeIcon.classList.remove('fa-moon');
+                themeIcon.classList.add('fa-sun');
+            } else {
+                document.documentElement.removeAttribute('data-theme');
+                themeIcon.classList.remove('fa-sun');
+                themeIcon.classList.add('fa-moon');
+            }
+        }
+
+        applyTheme(savedTheme);
+
+        themeToggleBtn.addEventListener('click', () => {
+            const currentTheme = document.documentElement.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            applyTheme(newTheme);
+            localStorage.setItem('cad_theme', newTheme);
+        });
+
+        // Animate On Scroll (AOS) Implementation
+        const cardsToAnimate = document.querySelectorAll('.about-card, .service-box');
+        
+        cardsToAnimate.forEach((card) => {
+            card.classList.add('reveal-item');
+        });
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const grid = entry.target.parentElement;
+                    const children = Array.from(grid.children).filter(child => child.classList.contains('reveal-item'));
+                    
+                    children.forEach((child, index) => {
+                        setTimeout(() => {
+                            child.classList.add('revealed');
+                        }, index * 100);
+                    });
+
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        cardsToAnimate.forEach(card => revealObserver.observe(card));
+
+        // File Selection Preview Text
+        const fileInput = document.getElementById('evidenceFiles');
+        const fileBtnText = document.getElementById('file-btn-text');
+        const fileNamesPreview = document.getElementById('fileNamesPreview');
+
+        fileInput.addEventListener('change', () => {
+            if (fileInput.files.length > 0) {
+                fileBtnText.textContent = `تم اختيار ${fileInput.files.length} ملفات`;
+                const names = Array.from(fileInput.files).map(f => f.name).join(', ');
+                fileNamesPreview.textContent = `الملفات: ${names}`;
+            } else {
+                fileBtnText.textContent = 'اضغط هنا لإرفاق الملفات';
+                fileNamesPreview.textContent = '';
+            }
+        });
+
+        // Helper function to convert file to base64
+        function readFileAsBase64(file) {
+            return new Promise((resolve, reject) => {
+                const reader = new FileReader();
+                reader.onload = () => resolve(reader.result);
+                reader.onerror = error => reject(error);
+                reader.readAsDataURL(file);
+            });
+        }
+
+        // Form Validation & Submission Flow
+        const reportForm = document.getElementById('reportForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const submitBtnText = document.getElementById('submitBtnText');
+        const modal = document.getElementById('successModal');
+        const modalCodeDisplay = document.getElementById('modalCodeDisplay');
+
+        // Clear error styling on user input
+        ['fullName', 'contactPhone', 'reportType', 'reportDetails'].forEach(id => {
+            const input = document.getElementById(id);
+            input.addEventListener('input', () => {
+                input.parentElement.classList.remove('invalid');
+            });
+            if (input.tagName === 'SELECT') {
+                input.addEventListener('change', () => {
+                    input.parentElement.classList.remove('invalid');
+                });
+            }
+        });
+
+        reportForm.addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            const fullNameInput = document.getElementById('fullName');
+            const contactPhoneInput = document.getElementById('contactPhone');
+            const reportTypeInput = document.getElementById('reportType');
+            const reportDetailsInput = document.getElementById('reportDetails');
+            const targetPhoneInput = document.getElementById('targetPhone');
+
+            let isValid = true;
+
+            if (!fullNameInput.value.trim()) {
+                fullNameInput.parentElement.classList.add('invalid');
+                isValid = false;
+            }
+
+            if (!contactPhoneInput.value.trim()) {
+                contactPhoneInput.parentElement.classList.add('invalid');
+                isValid = false;
+            }
+
+            if (!reportTypeInput.value) {
+                reportTypeInput.parentElement.classList.add('invalid');
+                isValid = false;
+            }
+
+            if (!reportDetailsInput.value.trim()) {
+                reportDetailsInput.parentElement.classList.add('invalid');
+                isValid = false;
+            }
+
+            if (!isValid) return;
+
+            submitBtn.disabled = true;
+
+            const randomCodeNum = Math.floor(1000 + Math.random() * 9000);
+            const reportCode = `CAD-2026-${randomCodeNum}`;
+
+            let driveFolderUrl = "";
+            const files = fileInput.files;
+
+            if (files.length > 0) {
+                submitBtnText.textContent = "جاري رفع الأدلة من فضلك انتظر...";
+                
+                try {
+                    const formData = new URLSearchParams();
+                    formData.append('reportCode', reportCode);
+                    formData.append('fileCount', files.length);
+
+                    for (let i = 0; i < files.length; i++) {
+                        const base64Data = await readFileAsBase64(files[i]);
+                        formData.append(`file_${i}`, base64Data);
+                        formData.append(`fileName_${i}`, files[i].name);
+                    }
+
+                    const response = await fetch(GOOGLE_SCRIPT_URL, {
+                        method: 'POST',
+                        body: formData
+                    });
+
+                    const result = await response.json();
+                    if (result && result.status === 'success') {
+                        driveFolderUrl = result.folderUrl;
+                    }
+                } catch (error) {
+                    console.error("Error uploading to Google Drive:", error);
+                }
+            }
+
+            modalCodeDisplay.textContent = reportCode;
+            modal.classList.add('active');
+
+            const fullName = fullNameInput.value.trim();
+            const contactPhone = contactPhoneInput.value.trim();
+            const targetPhone = targetPhoneInput.value.trim() || 'غير محدد';
+            const reportType = reportTypeInput.value;
+            const reportDetails = reportDetailsInput.value.trim();
+            const targetWhatsappNumber = "201210233693";
+
+            let message = `بلاغ جديد من مركز C.A.D
+كود البلاغ: ${reportCode}
+الاسم: ${fullName}
+رقم التواصل: ${contactPhone}
+رقم المبلغ عليه: ${targetPhone}
+نوع البلاغ: ${reportType}
+تفاصيل البلاغ:
+${reportDetails}`;
+
+            if (driveFolderUrl) {
+                message += `\n\nرابط الادلة: ${driveFolderUrl}`;
+            }
+
+            setTimeout(() => {
+                const encodedMessage = encodeURIComponent(message);
+                const whatsappUrl = `https://wa.me/${targetWhatsappNumber}?text=${encodedMessage}`;
+                window.open(whatsappUrl, '_blank');
+                
+                submitBtn.disabled = false;
+                submitBtnText.textContent = 'إرسال البلاغ عبر واتساب';
+
+                modal.classList.remove('active');
+                reportForm.reset();
+                fileBtnText.textContent = 'اضغط هنا لإرفاق الملفات';
+                fileNamesPreview.textContent = '';
+            }, 2000);
+        });
+    </script>
+</body>
+  </html>
