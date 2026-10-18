@@ -1,0 +1,1432 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>وزارة الداخلية | مركز مكافحة الجرائم الإلكترونية (C.A.D)</title>
+    
+    <!-- Google Fonts: Cairo & Tajawal -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;600;700;800&family=Tajawal:wght@400;500;700;900&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        :root {
+            --gov-navy: #0B1F35;
+            --gov-navy-light: #143050;
+            --gov-gold: #C5A059;
+            --gov-gold-hover: #b38f47;
+            --bg-light: #f5f7f9;
+            --card-bg: #ffffff;
+            --text-dark: #1e293b;
+            --text-muted: #64748b;
+            --border-color: #cbd5e1;
+            --input-bg: #ffffff;
+            --header-bg: rgba(255, 255, 255, 0.98);
+        }
+
+        [data-theme="dark"] {
+            --gov-navy: #06121d;
+            --gov-navy-light: #0b1f35;
+            --gov-gold: #d4af37;
+            --bg-light: #0b1118;
+            --card-bg: #111e2b;
+            --text-dark: #f8fafc;
+            --text-muted: #94a3b8;
+            --border-color: #334155;
+            --input-bg: #0f1c28;
+            --header-bg: rgba(11, 31, 53, 0.98);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Cairo', 'Tajawal', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            overflow-x: hidden;
+            line-height: 1.7;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        @keyframes marquee { 
+            0% { transform: translateX(100%); } 
+            100% { transform: translateX(-100%); } 
+        }
+
+        /* Top Official Govt Bar */
+        .gov-top-bar {
+            background-color: var(--gov-navy);
+            color: #ffffff;
+            padding: 8px 20px;
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--gov-gold);
+            z-index: 1001;
+            position: relative;
+        }
+
+        .gov-top-bar .gov-info {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .gov-top-bar .egypt-flag-emblem {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 700;
+            color: var(--gov-gold);
+        }
+
+        /* Fixed Navigation Bar */
+        header {
+            position: sticky;
+            top: 0;
+            right: 0;
+            width: 100%;
+            background-color: var(--header-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            transition: background-color 0.3s ease;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 12px 20px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            text-decoration: none;
+        }
+
+        .logo-emblem {
+            height: 48px;
+            width: 48px;
+            object-fit: contain;
+        }
+
+        .logo-text {
+            color: var(--text-dark);
+            font-weight: 700;
+            font-size: 1.05rem;
+            line-height: 1.3;
+        }
+
+        .logo-text span {
+            color: var(--gov-gold);
+            font-size: 0.8rem;
+            display: block;
+            font-weight: 600;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 20px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            position: relative;
+            padding: 5px 0;
+            cursor: pointer;
+        }
+
+        .nav-links a:hover, .nav-links a.active {
+            color: var(--gov-gold);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 0;
+            height: 2px;
+            background-color: var(--gov-gold);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after, .nav-links a.active::after {
+            width: 100%;
+        }
+
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .theme-toggle {
+            background: transparent;
+            border: 1px solid var(--gov-gold);
+            color: var(--gov-gold);
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .theme-toggle:hover {
+            background: var(--gov-gold);
+            color: var(--gov-navy);
+        }
+
+        .menu-btn {
+            display: none;
+            color: var(--gov-gold);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Sections General */
+        section {
+            padding: 90px 20px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.2rem;
+            color: var(--gov-navy);
+            margin-bottom: 40px;
+            position: relative;
+            font-weight: 800;
+        }
+
+        [data-theme="dark"] .section-title {
+            color: #f8fafc;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 3px;
+            background: var(--gov-gold);
+            margin: 12px auto 0;
+            border-radius: 2px;
+        }
+
+        /* Hero / Home Section */
+        #home {
+            text-align: center;
+            align-items: center;
+            padding-top: 100px;
+            background: linear-gradient(135deg, rgba(11, 31, 53, 0.03) 0%, rgba(197, 160, 89, 0.05) 100%);
+            border-radius: 0 0 30px 30px;
+            margin-bottom: 30px;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background-color: rgba(197, 160, 89, 0.15);
+            color: var(--gov-gold);
+            padding: 6px 16px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            border: 1px solid rgba(197, 160, 89, 0.3);
+        }
+
+        .hero-title {
+            font-size: 2.6rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            color: var(--gov-navy);
+            line-height: 1.3;
+        }
+
+        [data-theme="dark"] .hero-title {
+            color: #ffffff;
+        }
+
+        .hero-subtitle {
+            font-size: 1.15rem;
+            color: var(--text-muted);
+            max-width: 850px;
+            margin-bottom: 35px;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, var(--gov-navy), var(--gov-navy-light));
+            color: var(--gov-gold);
+            padding: 14px 35px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 15px rgba(11, 31, 53, 0.15);
+            transition: all 0.3s ease;
+            border: 1px solid var(--gov-gold);
+            cursor: pointer;
+        }
+
+        .cta-btn:hover {
+            background: var(--gov-gold);
+            color: var(--gov-navy);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(197, 160, 89, 0.3);
+        }
+
+        .secondary-cta-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: transparent;
+            color: var(--gov-gold);
+            padding: 14px 25px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            border: 1px solid var(--gov-gold);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .secondary-cta-btn:hover {
+            background: rgba(197, 160, 89, 0.1);
+            transform: translateY(-2px);
+        }
+
+        /* About Section */
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .about-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-top: 4px solid var(--gov-gold);
+            padding: 35px 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .about-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .about-card i {
+            font-size: 2.5rem;
+            color: var(--gov-gold);
+            margin-bottom: 20px;
+        }
+
+        .about-card h3 {
+            font-size: 1.35rem;
+            margin-bottom: 12px;
+            color: var(--text-dark);
+        }
+
+        .about-card p {
+            color: var(--text-muted);
+            font-size: 0.98rem;
+        }
+
+        /* Services Section */
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            gap: 25px;
+        }
+
+        .service-box {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 30px 25px;
+            border-radius: 10px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+            transition: all 0.3s ease;
+        }
+
+        .service-box::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--gov-gold);
+        }
+
+        .service-box:hover {
+            transform: translateY(-5px);
+            border-color: var(--gov-gold);
+            box-shadow: 0 10px 25px rgba(197, 160, 89, 0.15);
+        }
+
+        .service-box i {
+            font-size: 2.2rem;
+            color: var(--gov-navy);
+            margin-bottom: 15px;
+        }
+
+        [data-theme="dark"] .service-box i {
+            color: var(--gov-gold);
+        }
+
+        .service-box h3 {
+            color: var(--text-dark);
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+        }
+
+        .service-box p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+        }
+
+        .reveal-item {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .reveal-item.revealed {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Report Form Section */
+        .form-container {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-top: 4px solid var(--gov-navy);
+            padding: 40px;
+            border-radius: 12px;
+            max-width: 750px;
+            margin: 0 auto;
+            width: 100%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        [data-theme="dark"] .form-container {
+            border-top-color: var(--gov-gold);
+        }
+
+        .form-group {
+            margin-bottom: 22px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--text-dark);
+            font-size: 0.95rem;
+        }
+
+        .form-group label .required {
+            color: #dc2626;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 12px 16px;
+            background: var(--input-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            color: var(--text-dark);
+            font-size: 1rem;
+            outline: none;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+
+        .form-control option {
+            background-color: var(--card-bg);
+            color: var(--text-dark);
+        }
+
+        .form-control:focus {
+            border-color: var(--gov-gold);
+            box-shadow: 0 0 0 3px rgba(197, 160, 89, 0.15);
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 130px;
+        }
+
+        /* Legal Agreement Checkbox Card Styles */
+        .legal-box {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            background: var(--card-bg);
+            border: 1px solid #e5e7eb;
+            border-radius: 14px;
+            padding: 18px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group.invalid .legal-box {
+            border-color: #dc2626;
+        }
+
+        .legal-box input[type="checkbox"] {
+            appearance: none;
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            min-width: 22px;
+            min-height: 22px;
+            border: 2px solid #cbd5e1;
+            border-radius: 4px;
+            outline: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--input-bg);
+            transition: all 0.2s ease;
+            margin-top: 2px;
+        }
+
+        .legal-box input[type="checkbox"]:checked {
+            background-color: #0B1F35;
+            border-color: #0B1F35;
+        }
+
+        .legal-box input[type="checkbox"]:checked::after {
+            content: "\f00c";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            font-size: 12px;
+            color: #ffffff;
+        }
+
+        .legal-box label {
+            font-family: 'Cairo', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            color: var(--text-dark);
+            cursor: pointer;
+            line-height: 1.6;
+            margin: 0 !important;
+        }
+
+        .error-message {
+            color: #dc2626;
+            font-size: 0.85rem;
+            margin-top: 5px;
+            display: none;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .form-group.invalid .error-message {
+            display: flex;
+        }
+
+        .form-group.invalid .form-control {
+            border-color: #dc2626;
+        }
+
+        .submit-btn {
+            width: 100%;
+            background: #25D366; /* WhatsApp official brand color */
+            color: #fff;
+            padding: 15px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.15rem;
+            font-weight: 700;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: background 0.3s, transform 0.2s;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.2);
+        }
+
+        .submit-btn:hover {
+            background: #1ebc57;
+            transform: translateY(-2px);
+        }
+
+        .submit-btn:disabled {
+            background: #94a3b8;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+
+        /* Modal Popup */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(6, 18, 29, 0.8);
+            backdrop-filter: blur(5px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 2000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-box {
+            background: var(--card-bg);
+            border: 2px solid var(--gov-gold);
+            padding: 35px 25px;
+            border-radius: 14px;
+            text-align: center;
+            max-width: 450px;
+            width: 90%;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .modal-overlay.active .modal-box {
+            transform: scale(1);
+        }
+
+        .modal-icon {
+            font-size: 3.5rem;
+            color: #25D366;
+            margin-bottom: 15px;
+        }
+
+        .modal-title {
+            font-size: 1.4rem;
+            color: var(--text-dark);
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+
+        .modal-desc {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-top: 10px;
+        }
+
+        /* Contact Section */
+        .contact-info {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            flex-wrap: wrap;
+        }
+
+        .contact-item {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            border-bottom: 4px solid var(--gov-gold);
+            min-width: 280px;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
+        }
+
+        .contact-item i {
+            font-size: 2.2rem;
+            color: var(--gov-gold);
+            margin-bottom: 15px;
+        }
+
+        .contact-item h3 {
+            color: var(--text-dark);
+            margin-bottom: 8px;
+            font-size: 1.2rem;
+        }
+
+        .contact-item p {
+            color: var(--text-muted);
+            font-size: 0.98rem;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--gov-navy);
+            border-top: 2px solid var(--gov-gold);
+            text-align: center;
+            padding: 25px 20px;
+            color: #cbd5e1;
+            font-size: 0.9rem;
+        }
+
+        footer p {
+            margin-bottom: 5px;
+        }
+
+        footer span {
+            color: var(--gov-gold);
+        }
+
+        /* Back to Main View Button */
+        .back-to-main-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: transparent;
+            border: 1px solid var(--gov-gold);
+            color: var(--gov-gold);
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin-bottom: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-main-btn:hover {
+            background: var(--gov-gold);
+            color: var(--gov-navy);
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 768px) {
+            .gov-top-bar {
+                font-size: 0.75rem;
+                padding: 6px 10px;
+                flex-direction: column;
+                gap: 4px;
+                text-align: center;
+            }
+
+            .menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                position: fixed;
+                top: 105px;
+                right: -100%;
+                width: 100%;
+                height: calc(100vh - 105px);
+                background-color: var(--header-bg);
+                flex-direction: column;
+                align-items: center;
+                padding-top: 40px;
+                transition: 0.4s ease;
+                border-left: 1px solid var(--border-color);
+                z-index: 999;
+            }
+
+            .nav-links.active {
+                right: 0;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .hero-subtitle {
+                font-size: 1rem;
+            }
+
+            .form-container {
+                padding: 25px 18px;
+            }
+        }
+    </style>
+</head>
+<body data-theme="dark">
+
+    <!-- Top Announcement Marquee Bar -->
+    <div id="announcement-bar" style="background:#C5A059; color:#0B1F35; padding:8px; text-align:center; position:relative; overflow:hidden; white-space:nowrap; z-index:1002;">
+      <div style="display:inline-block; animation: marquee 12s linear infinite; font-weight:700; font-size:0.9rem;">
+        تنبيه هام: تم اضافة قسم جديد للبلاغ عن حالات ازعاج الطالبات داخل الحرم الجامعي - البلاغات تصل مباشرة لشؤون الطلاب بسرية تامة
+      </div>
+      <span id="close-bar" style="position:absolute; left:10px; top:50%; transform:translateY(-50%); cursor:pointer; font-weight:bold;">X</span>
+    </div>
+
+    <!-- Official Government Top Bar -->
+    <div class="gov-top-bar">
+        <div class="gov-info">
+            <span class="egypt-flag-emblem">
+                <i class="fas fa-landmark"></i> جمهورية مصر العربية
+            </span>
+            <span>| وزارة الداخلية</span>
+            <span style="display: none; @media(min-width:768px){display:inline;}">| قطاع نظم وتكنولوجيا المعلومات</span>
+        </div>
+        <div>
+            <span>الإدارة العامة لمكافحة جرائم التكنولوجيا</span>
+        </div>
+    </div>
+
+    <!-- Header / Navbar -->
+    <header>
+        <div class="navbar">
+            <a onclick="showMainPage()" class="logo-container" style="cursor: pointer;">
+                <svg class="logo-emblem" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="50" cy="50" r="48" fill="#0B1F35" stroke="#C5A059" stroke-width="3"/>
+                    <path d="M50 20 C42 20 38 28 38 35 C38 42 45 45 50 50 C55 45 62 42 62 35 C62 28 58 20 50 20 Z" fill="#C5A059"/>
+                    <path d="M30 55 L50 75 L70 55 C70 55 75 75 50 85 C25 75 30 55 30 55 Z" fill="#C5A059"/>
+                    <rect x="44" y="42" width="12" height="15" fill="#ffffff"/>
+                </svg>
+                
+                <div class="logo-text">
+                    مركز مكافحة الجرائم الإلكترونية
+                    <span>Cybercrime Anti-Defense - C.A.D</span>
+                </div>
+            </a>
+
+            <div class="nav-controls">
+                <button class="theme-toggle" id="theme-toggle" title="تبديل الوضع">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <div class="menu-btn" id="menu-btn">
+                    <i class="fas fa-bars"></i>
+                </div>
+            </div>
+
+            <ul class="nav-links" id="nav-links">
+                <li><a onclick="showMainPage('#home')">الرئيسية</a></li>
+                <li><a onclick="showMainPage('#about')">من نحن</a></li>
+                <li><a onclick="showMainPage('#services')">خدماتنا</a></li>
+                <li><a onclick="showMainPage('#report')">تقديم بلاغ</a></li>
+                <li><a onclick="showCollegePage()">بلاغ عن ازعاج من طلاب الكلية</a></li>
+                <li><a onclick="showMainPage('#contact')">تواصل معنا</a></li>
+            </ul>
+        </div>
+    </header>
+
+    <!-- MAIN PAGE CONTAINER -->
+    <div id="mainPage">
+        <!-- Home / Hero Section -->
+        <section id="home">
+            <div class="hero-badge">
+                <i class="fas fa-shield-alt"></i> البوابة الرسمية للاستجابة للبلاغات السيبرانية
+            </div>
+            <h1 class="hero-title">مركز مكافحة الجرائم الإلكترونية (C.A.D)</h1>
+            <p class="hero-subtitle">حماية متكاملة للحقوق والبيانات الرقمية في إطار سيادة القانون. نوفر الآليات الرسمية والآمنة للتصدي لاختراقات الحسابات، النصب المالي، والابتزاز الإلكتروني بأعلى معايير السرية والسرعة.</p>
+            <div class="hero-buttons">
+                <a href="#report" class="cta-btn" onclick="showMainPage('#report')">
+                    <i class="fas fa-file-shield"></i> تقديم بلاغ رسمي فوري
+                </a>
+                <button class="secondary-cta-btn" id="openGuideBtn">
+                    <i class="fas fa-question-circle"></i> كيف تبلغ عن حالة ازعاج؟
+                </button>
+            </div>
+        </section>
+
+        <!-- Guide Modal -->
+        <div class="modal-overlay" id="guideModal">
+            <div class="modal-box" style="text-align: right;">
+                <h3 class="modal-title" style="text-align: center; margin-bottom: 20px;">كيف تبلغ عن حالة إزعاج؟</h3>
+                <div style="color: var(--text-muted); font-size: 0.98rem; line-height: 2.2; margin-bottom: 25px;">
+                    <p><strong>1-</strong> اضغط على الـ 3 شرط ☰</p>
+                    <p><strong>2-</strong> اختر بلاغ عن ازعاج من طلاب الكلية</p>
+                    <p><strong>3-</strong> هتنتقل لواجهة جديدة منفصلة املأ بياناتك بسرية</p>
+                </div>
+                <div style="display: flex; gap: 10px; flex-direction: column;">
+                    <button class="cta-btn" onclick="closeGuideAndOpenCollege()" style="width: 100%; justify-content: center;">اذهب لصفحة البلاغ</button>
+                    <button class="secondary-cta-btn" id="closeGuideModal" style="width: 100%; justify-content: center; border-color: var(--border-color); color: var(--text-muted);">إغلاق</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- About Section -->
+        <section id="about">
+            <h2 class="section-title">عن المركز</h2>
+            <div class="about-grid">
+                <div class="about-card">
+                    <i class="fas fa-balance-scale"></i>
+                    <h3>الإطار القانوني والأمني</h3>
+                    <p>نعمل وفقاً للقوانين المصرية المنظمة لتكنولوجيا المعلومات وحماية البيانات الشخصية وحفظ الأمن القومي الرقمي.</p>
+                </div>
+                <div class="about-card">
+                    <i class="fas fa-user-secret"></i>
+                    <h3>السرية والخصوصية التامة</h3>
+                    <p>نضمن لجميع المواطنين التعامل مع كافة البيانات والشكاوى الواردة بأقصى درجات السرية التعديلية والأمن السيبراني المشفر.</p>
+                </div>
+                <div class="about-card">
+                    <i class="fas fa-headset"></i>
+                    <h3>استجابة سريعة وفورية</h3>
+                    <p>فريق متخصص من الخبراء الفنيين والقانونيين جاهز للتعامل مع مختلف البلاغات الطارئة على مدار الساعة.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Services Section -->
+        <section id="services">
+            <h2 class="section-title">خدمات المركز</h2>
+            <div class="services-grid">
+                <div class="service-box">
+                    <i class="fas fa-user-shield"></i>
+                    <h3>مكافحة الابتزاز الإلكتروني</h3>
+                    <p>تلقي وفحص بلاغات الابتزاز الشخصي عبر منصات التواصل الاجتماعي وتأمين المتضررين.</p>
+                </div>
+                <div class="service-box">
+                    <i class="fas fa-university"></i>
+                    <h3>تتبع الاحتيال المالي الرقمي</h3>
+                    <p>المساعدة في التعامل مع جرائم النصب الإلكتروني والتحويلات المصرفية المشبوهة والتطبيقات الوهمية.</p>
+                </div>
+                <div class="service-box">
+                    <i class="fas fa-laptop-code"></i>
+                    <h3>التحقيق الرقمي وفحص الاختراقات</h3>
+                    <p>كشف ومعالجة ثغرات الأمان والوصول غير المشروع للحسابات والأنظمة الشخصية.</p>
+                </div>
+                <div class="service-box">
+                    <i class="fas fa-shield-halved"></i>
+                    <h3>الاستشارات والدعم الوقائي</h3>
+                    <p>توجيه المواطنين والإرشادات التوعوية لتجنب الوقوع ضحية للجرائم السيبرانية المستحدثة.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Report Section -->
+        <section id="report">
+            <h2 class="section-title">منظومة تلقي البلاغات الرسمية</h2>
+            <div class="form-container">
+                <form id="reportForm" novalidate>
+                    <div class="form-group">
+                        <label for="fullName">الاسم الكامل (كما هو في البطاقة الشخصية) <span class="required">*</span></label>
+                        <input type="text" id="fullName" class="form-control" placeholder="أدخل اسمك ثلاثي أو رباعي">
+                        <div class="error-message"><i class="fas fa-circle-exclamation"></i> يرجى إدخال الاسم الكامل</div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="contactPhone">رقم هاتف المبلغ للتواصل <span class="required">*</span></label>
+                        <input type="tel" id="contactPhone" class="form-control" placeholder="أدخل رقم هاتفك المحمول">
+                        <div class="error-message"><i class="fas fa-circle-exclamation"></i> يرجى إدخال رقم هاتف صحيح للتواصل</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="targetPhone">رقم المبلغ عليه / الحساب المشتبه به (اختياري)</label>
+                        <input type="text" id="targetPhone" class="form-control" placeholder="رقم الهاتف أو رابط الحساب المشتبه به إن وجد">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reportType">نوع البلاغ <span class="required">*</span></label>
+                        <select id="reportType" class="form-control">
+                            <option value="" disabled selected>اختر تصنيف البلاغ...</option>
+                            <option value="ابتزاز الكتروني">ابتزاز الكتروني</option>
+                            <option value="نصب واحتيال مالي">نصب واحتيال مالي</option>
+                            <option value="اختراق حسابات">اختراق حسابات</option>
+                            <option value="تشهير">تشهير وإساءة سمعة</option>
+                            <option value="اخرى">بلاغ إلكتروني آخر</option>
+                        </select>
+                        <div class="error-message"><i class="fas fa-circle-exclamation"></i> يرجى اختيار نوع البلاغ</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="reportDetails">تفاصيل البلاغ والواقعة <span class="required">*</span></label>
+                        <textarea id="reportDetails" class="form-control" placeholder="اكتب شرحاً وافياً لتفاصيل الواقعة والضرر الواقع عليك..."></textarea>
+                        <div class="error-message"><i class="fas fa-circle-exclamation"></i> يرجى كتابة تفاصيل البلاغ</div>
+                    </div>
+
+                    <!-- Legal Agreement Checkbox Card -->
+                    <div class="form-group">
+                        <div class="legal-box" id="legalBoxContainer">
+                            <input type="checkbox" id="legalAgreement" required>
+                            <label for="legalAgreement">
+                                أقر بأن البيانات صحيحة وأتحمل المسؤولية القانونية عن أي بلاغ كاذب طبقا للمادة 305 من قانون العقوبات، وأوافق على سياسة الخصوصية.
+                            </label>
+                        </div>
+                        <div class="error-message"><i class="fas fa-circle-exclamation"></i> يجب الموافقة على الإقرار القانوني</div>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <i class="fab fa-whatsapp"></i> <span id="submitBtnText">إرسال البلاغ ومتابعته عبر واتساب</span>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact">
+            <h2 class="section-title">قنوات التواصل الرسمية</h2>
+            <div class="contact-info">
+                <div class="contact-item">
+                    <i class="fab fa-whatsapp"></i>
+                    <h3>الخط السريع للواتساب</h3>
+                    <p style="direction: ltr; font-weight: 700;">+20 1210233693</p>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-shield-cat"></i>
+                    <h3>قطاع نظم وتكنولوجيا المعلومات</h3>
+                    <p>استجابة فورية وحماية لبيانات وحقوق المواطنين</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- COLLEGE PAGE CONTAINER (VIRTUAL SEPARATE PAGE) -->
+    <div id="collegePage" style="display: none;">
+        <section style="min-height: auto; padding-top: 40px;">
+            <button class="back-to-main-btn" onclick="showMainPage()">
+                <i class="fas fa-arrow-right"></i> العودة للرئيسية
+            </button>
+            <h2 class="section-title">بلاغ عن ازعاج من طلاب الكلية - سري ويصل لشؤون الطلبة</h2>
+            <div class="form-container">
+                <form id="collegeReportForm" novalidate>
+                    <div class="form-group">
+                        <label for="collegeFullName">اسم المبلغة (سري)</label>
+                        <input type="text" id="collegeFullName" class="form-control" placeholder="أدخل اسمك (اختياري / سرية تامة)">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="collegeContactPhone">رقم هاتف التواصل</label>
+                        <input type="tel" id="collegeContactPhone" class="form-control" placeholder="رقم هاتفك للمتابعة">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="collegeTargetUser">رقم / يوزر المزعج <span class="required">*</span></label>
+                        <input type="text" id="collegeTargetUser" class="form-control" placeholder="رقم الهاتف أو اليوزر أو اسم الشخص المشتبه به">
+                        <div class="error-message"><i class="fas fa-circle-exclamation"></i> يرجى إدخال رقم أو يوزر المزعج</div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="collegeNameField">الكلية</label>
+                        <input type="text" id="collegeNameField" class="form-control" placeholder="اسم الكلية التابعة لها">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="collegeLocation">مكان الواقعة</label>
+                        <input type="text" id="collegeLocation" class="form-control" placeholder="مثال: قاعة المحاضرات، الساحة، البوابة...">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="collegeDetails">ايه اللي حصل <span class="required">*</span></label>
+                        <textarea id="collegeDetails" class="form-control" placeholder="اكتب تفاصيل الواقعة وما حدث معكِ بالتفصيل..."></textarea>
+                        <div class="error-message"><i class="fas fa-circle-exclamation"></i> يرجى كتابة تفاصيل الواقعة</div>
+                    </div>
+
+                    <!-- Legal Agreement Checkbox Card -->
+                    <div class="form-group">
+                        <div class="legal-box">
+                            <input type="checkbox" id="collegeLegalAgreement" required>
+                            <label for="collegeLegalAgreement">
+                                أقر بأن البيانات صحيحة وأتحمل المسؤولية القانونية عن أي بلاغ كاذب طبقا للمادة 305 من قانون العقوبات، وأوافق على سياسة الخصوصية.
+                            </label>
+                        </div>
+                        <div class="error-message"><i class="fas fa-circle-exclamation"></i> يجب الموافقة على الإقرار القانوني</div>
+                    </div>
+
+                    <button type="submit" class="submit-btn" id="collegeSubmitBtn">
+                        <i class="fab fa-whatsapp"></i> <span id="collegeSubmitBtnText">إرسال البلاغ لشؤون الطلاب عبر واتساب</span>
+                    </button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <!-- Success Modal Shared -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal-box">
+            <i class="fas fa-circle-check modal-icon"></i>
+            <h3 class="modal-title" id="modalTitleText">تم استلام بلاغك بنجاح</h3>
+            <p class="modal-desc" id="modalDescText">جاري تحويلك الآن إلى القناة الرسمية عبر واتساب لاستكمال الإجراءات...</p>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>جمهورية مصر العربية &bull; وزارة الداخلية &bull; قطاع نظم وتكنولوجيا المعلومات</p>
+        <p>جميع الحقوق محفوظة &copy; 2026 - <span>مركز مكافحة الجرائم الإلكترونية (C.A.D)</span></p>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Announcement Bar Marquee Logic
+        const announcementBar = document.getElementById('announcement-bar');
+        const closeBarBtn = document.getElementById('close-bar');
+
+        if (localStorage.getItem('barClosed') === 'true') {
+            if (announcementBar) announcementBar.style.display = 'none';
+        }
+
+        if (closeBarBtn) {
+            closeBarBtn.addEventListener('click', () => {
+                if (announcementBar) announcementBar.style.display = 'none';
+                localStorage.setItem('barClosed', 'true');
+            });
+        }
+
+        // Single Page Navigation Engine (Window Scope)
+        const mainPage = document.getElementById('mainPage');
+        const collegePage = document.getElementById('collegePage');
+        const navLinks = document.getElementById('nav-links');
+
+        window.showMainPage = function(targetHash) {
+            collegePage.style.display = 'none';
+            mainPage.style.display = 'block';
+            if (navLinks) navLinks.classList.remove('active');
+            if (targetHash) {
+                const targetElement = document.querySelector(targetHash);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            } else {
+                window.scrollTo(0, 0);
+            }
+        };
+
+        window.showCollegePage = function() {
+            mainPage.style.display = 'none';
+            collegePage.style.display = 'block';
+            if (navLinks) navLinks.classList.remove('active');
+            window.scrollTo(0, 0);
+        };
+
+        function closeGuideAndOpenCollege() {
+            const guideModal = document.getElementById('guideModal');
+            if (guideModal) guideModal.classList.remove('active');
+            showCollegePage();
+        }
+
+        // Guide Modal Logic
+        const openGuideBtn = document.getElementById('openGuideBtn');
+        const guideModal = document.getElementById('guideModal');
+        const closeGuideModal = document.getElementById('closeGuideModal');
+
+        if (openGuideBtn) {
+            openGuideBtn.addEventListener('click', () => {
+                if (guideModal) guideModal.classList.add('active');
+            });
+        }
+
+        if (closeGuideModal) {
+            closeGuideModal.addEventListener('click', () => {
+                if (guideModal) guideModal.classList.remove('active');
+            });
+        }
+
+        if (guideModal) {
+            guideModal.addEventListener('click', (e) => {
+                if (e.target === guideModal) {
+                    guideModal.classList.remove('active');
+                }
+            });
+        }
+
+        // Mobile Menu Toggle & Outside Click
+        const menuBtn = document.getElementById('menu-btn');
+
+        if (menuBtn && navLinks) {
+            menuBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                navLinks.classList.toggle('active');
+            });
+
+            document.addEventListener('click', (e) => {
+                if (!navLinks.contains(e.target) && !menuBtn.contains(e.target)) {
+                    navLinks.classList.remove('active');
+                }
+            });
+        }
+
+        // Dark/Light Mode Switcher Logic
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = themeToggleBtn ? themeToggleBtn.querySelector('i') : null;
+        const savedTheme = localStorage.getItem('cad_theme') || 'dark';
+
+        function applyTheme(theme) {
+            if (theme === 'light') {
+                document.body.setAttribute('data-theme', 'light');
+                if (themeIcon) {
+                    themeIcon.classList.remove('fa-sun');
+                    themeIcon.classList.add('fa-moon');
+                }
+            } else {
+                document.body.setAttribute('data-theme', 'dark');
+                if (themeIcon) {
+                    themeIcon.classList.remove('fa-moon');
+                    themeIcon.classList.add('fa-sun');
+                }
+            }
+        }
+
+        applyTheme(savedTheme);
+
+        if (themeToggleBtn) {
+            themeToggleBtn.addEventListener('click', () => {
+                const currentTheme = document.body.getAttribute('data-theme');
+                const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+                applyTheme(newTheme);
+                localStorage.setItem('cad_theme', newTheme);
+            });
+        }
+
+        // Animate On Scroll (AOS) Implementation
+        const cardsToAnimate = document.querySelectorAll('.about-card, .service-box');
+        
+        cardsToAnimate.forEach((card) => {
+            card.classList.add('reveal-item');
+        });
+
+        const revealObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const grid = entry.target.parentElement;
+                    const children = Array.from(grid.children).filter(child => child.classList.contains('reveal-item'));
+                    
+                    children.forEach((child, index) => {
+                        setTimeout(() => {
+                            child.classList.add('revealed');
+                        }, index * 100);
+                    });
+
+                    revealObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.15 });
+
+        cardsToAnimate.forEach(card => revealObserver.observe(card));
+
+        // Form Validation & Submission Flow (Original Cybercrime Form)
+        const reportForm = document.getElementById('reportForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const submitBtnText = document.getElementById('submitBtnText');
+        const modal = document.getElementById('successModal');
+        const legalAgreementInput = document.getElementById('legalAgreement');
+
+        ['fullName', 'contactPhone', 'reportType', 'reportDetails'].forEach(id => {
+            const input = document.getElementById(id);
+            if(input) {
+                input.addEventListener('input', () => {
+                    input.parentElement.classList.remove('invalid');
+                });
+                if (input.tagName === 'SELECT') {
+                    input.addEventListener('change', () => {
+                        input.parentElement.classList.remove('invalid');
+                    });
+                }
+            }
+        });
+
+        if(legalAgreementInput) {
+            legalAgreementInput.addEventListener('change', () => {
+                legalAgreementInput.closest('.form-group').classList.remove('invalid');
+            });
+        }
+
+        if(reportForm) {
+            reportForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const fullNameInput = document.getElementById('fullName');
+                const contactPhoneInput = document.getElementById('contactPhone');
+                const reportTypeInput = document.getElementById('reportType');
+                const reportDetailsInput = document.getElementById('reportDetails');
+                const targetPhoneInput = document.getElementById('targetPhone');
+
+                let isValid = true;
+
+                if (!fullNameInput.value.trim()) {
+                    fullNameInput.parentElement.classList.add('invalid');
+                    isValid = false;
+                }
+
+                if (!contactPhoneInput.value.trim()) {
+                    contactPhoneInput.parentElement.classList.add('invalid');
+                    isValid = false;
+                }
+
+                if (!reportTypeInput.value) {
+                    reportTypeInput.parentElement.classList.add('invalid');
+                    isValid = false;
+                }
+
+                if (!reportDetailsInput.value.trim()) {
+                    reportDetailsInput.parentElement.classList.add('invalid');
+                    isValid = false;
+                }
+
+                if (!legalAgreementInput.checked) {
+                    legalAgreementInput.closest('.form-group').classList.add('invalid');
+                    isValid = false;
+                }
+
+                if (!isValid) return;
+
+                submitBtn.disabled = true;
+
+                document.getElementById('modalTitleText').textContent = 'تم استلام بلاغك بنجاح';
+                document.getElementById('modalDescText').textContent = 'جاري تحويلك الآن إلى القناة الرسمية عبر واتساب لاستكمال الإجراءات...';
+                modal.classList.add('active');
+
+                const fullName = fullNameInput.value.trim();
+                const contactPhone = contactPhoneInput.value.trim();
+                const targetPhone = targetPhoneInput.value.trim() || 'غير محدد';
+                const reportType = reportTypeInput.value;
+                const reportDetails = reportDetailsInput.value.trim();
+                const targetWhatsappNumber = "201210233693";
+
+                let message = `[بلاغ رسمي - مركز C.A.D]
+اسم المبلغ: ${fullName}
+رقم التواصل: ${contactPhone}
+رقم المبلغ عليه: ${targetPhone}
+نوع البلاغ: ${reportType}
+تفاصيل البلاغ:
+${reportDetails}
+
+[تم الإقرار بصحة البيانات والمسؤولية القانونية طبقا للمادة 305 من قانون العقوبات]`;
+
+                setTimeout(() => {
+                    const encodedMessage = encodeURIComponent(message);
+                    const whatsappUrl = `https://wa.me/${targetWhatsappNumber}?text=${encodedMessage}`;
+                    window.open(whatsappUrl, '_blank');
+                    
+                    submitBtn.disabled = false;
+                    submitBtnText.textContent = 'إرسال البلاغ ومتابعته عبر واتساب';
+
+                    modal.classList.remove('active');
+                    reportForm.reset();
+                }, 2000);
+            });
+        }
+
+        // College Harassment Form Submission Logic
+        const collegeReportForm = document.getElementById('collegeReportForm');
+        const collegeSubmitBtn = document.getElementById('collegeSubmitBtn');
+        const collegeSubmitBtnText = document.getElementById('collegeSubmitBtnText');
+        const collegeLegalAgreement = document.getElementById('collegeLegalAgreement');
+
+        ['collegeTargetUser', 'collegeDetails'].forEach(id => {
+            const input = document.getElementById(id);
+            if(input) {
+                input.addEventListener('input', () => {
+                    input.parentElement.classList.remove('invalid');
+                });
+            }
+        });
+
+        if(collegeLegalAgreement) {
+            collegeLegalAgreement.addEventListener('change', () => {
+                collegeLegalAgreement.closest('.form-group').classList.remove('invalid');
+            });
+        }
+
+        if(collegeReportForm) {
+            collegeReportForm.addEventListener('submit', async function(e) {
+                e.preventDefault();
+
+                const collegeTargetUserInput = document.getElementById('collegeTargetUser');
+                const collegeDetailsInput = document.getElementById('collegeDetails');
+
+                let isValid = true;
+
+                if (!collegeTargetUserInput.value.trim()) {
+                    collegeTargetUserInput.parentElement.classList.add('invalid');
+                    isValid = false;
+                }
+
+                if (!collegeDetailsInput.value.trim()) {
+                    collegeDetailsInput.parentElement.classList.add('invalid');
+                    isValid = false;
+                }
+
+                if (!collegeLegalAgreement.checked) {
+                    collegeLegalAgreement.closest('.form-group').classList.add('invalid');
+                    isValid = false;
+                }
+
+                if (!isValid) return;
+
+                collegeSubmitBtn.disabled = true;
+
+                document.getElementById('modalTitleText').textContent = 'تم الاستلام بنجاح';
+                document.getElementById('modalDescText').textContent = 'جاري تحويلك الآن إلى شؤون الطلاب عبر واتساب...';
+                modal.classList.add('active');
+
+                const fName = document.getElementById('collegeFullName').value.trim() || 'غير محدد (سري)';
+                const cPhone = document.getElementById('collegeContactPhone').value.trim() || 'غير محدد';
+                const tUser = collegeTargetUserInput.value.trim();
+                const cName = document.getElementById('collegeNameField').value.trim() || 'غير محدد';
+                const cLoc = document.getElementById('collegeLocation').value.trim() || 'غير محدد';
+                const cDetails = collegeDetailsInput.value.trim();
+                const targetWhatsappNumber = "201210233693";
+
+                let message = `[بلاغ إزعاج داخل الحرم الجامعي - شؤون الطلاب]
+اسم المبلغة: ${fName}
+رقم التواصل: ${cPhone}
+رقم/يوزر المزعج: ${tUser}
+الكلية: ${cName}
+مكان الواقعة: ${cLoc}
+التفاصيل:
+${cDetails}
+
+[تم الإقرار بصحة البيانات والمسؤولية القانونية طبقا للمادة 305 من قانون العقوبات]`;
+
+                setTimeout(() => {
+                    const encodedMessage = encodeURIComponent(message);
+                    const whatsappUrl = `https://wa.me/${targetWhatsappNumber}?text=${encodedMessage}`;
+                    window.open(whatsappUrl, '_blank');
+                    
+                    collegeSubmitBtn.disabled = false;
+                    collegeSubmitBtnText.textContent = 'إرسال البلاغ لشؤون الطلاب عبر واتساب';
+
+                    modal.classList.remove('active');
+                    collegeReportForm.reset();
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
