@@ -1393,3 +1393,40 @@ ${reportDetails}
 
                 document.getElementById('modalTitleText').textContent = 'تم الاستلام بنجاح';
                 document.getElementById('modalDescText').textContent = 'جاري تحويلك الآن إلى شؤون الطلاب عبر واتساب...';
+                modal.classList.add('active');
+
+                const fName = document.getElementById('collegeFullName').value.trim() || 'غير محدد (سري)';
+                const cPhone = document.getElementById('collegeContactPhone').value.trim() || 'غير محدد';
+                const tUser = collegeTargetUserInput.value.trim();
+                const cName = document.getElementById('collegeNameField').value.trim() || 'غير محدد';
+                const cLoc = document.getElementById('collegeLocation').value.trim() || 'غير محدد';
+                const cDetails = collegeDetailsInput.value.trim();
+                const targetWhatsappNumber = "201210233693";
+
+                let message = `[بلاغ إزعاج داخل الحرم الجامعي - شؤون الطلاب]
+اسم المبلغة: ${fName}
+رقم التواصل: ${cPhone}
+رقم/يوزر المزعج: ${tUser}
+الكلية: ${cName}
+مكان الواقعة: ${cLoc}
+التفاصيل:
+${cDetails}
+
+[تم الإقرار بصحة البيانات والمسؤولية القانونية طبقا للمادة 305 من قانون العقوبات]`;
+
+                setTimeout(() => {
+                    const encodedMessage = encodeURIComponent(message);
+                    const whatsappUrl = `https://wa.me/${targetWhatsappNumber}?text=${encodedMessage}`;
+                    window.open(whatsappUrl, '_blank');
+                    
+                    collegeSubmitBtn.disabled = false;
+                    collegeSubmitBtnText.textContent = 'إرسال البلاغ لشؤون الطلاب عبر واتساب';
+
+                    modal.classList.remove('active');
+                    collegeReportForm.reset();
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
