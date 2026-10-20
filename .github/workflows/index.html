@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>وزارة الداخلية | مركز مكافحة الجرائم الإلكترونية (C.A.D)</title>
+    <title>C.A.D | Cybercrime Anti-Defense - منصة مكافحة الجرائم الإلكترونية</title>
     
     <!-- Google Fonts: Cairo & Tajawal -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -57,40 +57,82 @@
             transition: background-color 0.3s ease, color 0.3s ease;
         }
 
-        @keyframes marquee { 
-            0% { transform: translateX(100%); } 
-            100% { transform: translateX(-100%); } 
+        /* Startup & General Modals */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(6, 18, 29, 0.85);
+            backdrop-filter: blur(8px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 3000;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.3s ease, visibility 0.3s ease;
         }
 
-        /* Top Official Govt Bar */
-        .gov-top-bar {
-            background-color: var(--gov-navy);
-            color: #ffffff;
-            padding: 8px 20px;
-            font-size: 0.85rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            border-bottom: 2px solid var(--gov-gold);
-            z-index: 1001;
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-box {
+            background: var(--card-bg);
+            border: 2px solid var(--gov-gold);
+            padding: 35px 30px;
+            border-radius: 16px;
+            text-align: center;
+            max-width: 500px;
+            width: 90%;
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+            transform: scale(0.9);
+            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
         }
 
-        .gov-top-bar .gov-info {
-            display: flex;
-            align-items: center;
-            gap: 15px;
+        .modal-overlay.active .modal-box {
+            transform: scale(1);
         }
 
-        .gov-top-bar .egypt-flag-emblem {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            font-weight: 700;
+        .modal-close-x {
+            position: absolute;
+            top: 15px;
+            left: 20px;
+            font-size: 1.3rem;
+            color: var(--text-muted);
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+
+        .modal-close-x:hover {
             color: var(--gov-gold);
         }
 
-        /* Fixed Navigation Bar */
+        .modal-icon {
+            font-size: 3.2rem;
+            color: var(--gov-gold);
+            margin-bottom: 15px;
+        }
+
+        .modal-title {
+            font-size: 1.5rem;
+            color: var(--text-dark);
+            margin-bottom: 12px;
+            font-weight: 800;
+        }
+
+        .modal-desc {
+            color: var(--text-muted);
+            font-size: 0.98rem;
+            margin-bottom: 25px;
+            line-height: 1.8;
+        }
+
+        /* Header / Navbar */
         header {
             position: sticky;
             top: 0;
@@ -118,6 +160,7 @@
             align-items: center;
             gap: 15px;
             text-decoration: none;
+            cursor: pointer;
         }
 
         .logo-emblem {
@@ -128,22 +171,23 @@
 
         .logo-text {
             color: var(--text-dark);
-            font-weight: 700;
-            font-size: 1.05rem;
+            font-weight: 800;
+            font-size: 1.15rem;
             line-height: 1.3;
         }
 
         .logo-text span {
             color: var(--gov-gold);
-            font-size: 0.8rem;
+            font-size: 0.78rem;
             display: block;
             font-weight: 600;
+            letter-spacing: 0.5px;
         }
 
         .nav-links {
             display: flex;
             list-style: none;
-            gap: 20px;
+            gap: 22px;
             align-items: center;
             flex-wrap: wrap;
         }
@@ -152,7 +196,7 @@
             color: var(--text-muted);
             text-decoration: none;
             font-weight: 600;
-            font-size: 0.9rem;
+            font-size: 0.92rem;
             transition: all 0.3s ease;
             position: relative;
             padding: 5px 0;
@@ -182,6 +226,16 @@
             display: flex;
             align-items: center;
             gap: 15px;
+        }
+
+        .support-badge {
+            background-color: rgba(197, 160, 89, 0.12);
+            color: var(--gov-gold);
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            border: 1px solid rgba(197, 160, 89, 0.3);
         }
 
         .theme-toggle {
@@ -216,15 +270,11 @@
             padding: 90px 20px 50px;
             max-width: 1200px;
             margin: 0 auto;
-            min-height: 80vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
         }
 
         .section-title {
             text-align: center;
-            font-size: 2.2rem;
+            font-size: 2.3rem;
             color: var(--gov-navy);
             margin-bottom: 40px;
             position: relative;
@@ -248,10 +298,14 @@
         /* Hero / Home Section */
         #home {
             text-align: center;
+            display: flex;
+            flex-direction: column;
             align-items: center;
-            padding-top: 100px;
-            background: linear-gradient(135deg, rgba(11, 31, 53, 0.03) 0%, rgba(197, 160, 89, 0.05) 100%);
-            border-radius: 0 0 30px 30px;
+            justify-content: center;
+            padding-top: 110px;
+            min-height: 80vh;
+            background: linear-gradient(135deg, rgba(11, 31, 53, 0.03) 0%, rgba(197, 160, 89, 0.06) 100%);
+            border-radius: 0 0 40px 40px;
             margin-bottom: 30px;
         }
 
@@ -261,7 +315,7 @@
             gap: 8px;
             background-color: rgba(197, 160, 89, 0.15);
             color: var(--gov-gold);
-            padding: 6px 16px;
+            padding: 6px 18px;
             border-radius: 20px;
             font-size: 0.9rem;
             font-weight: 700;
@@ -270,8 +324,8 @@
         }
 
         .hero-title {
-            font-size: 2.6rem;
-            font-weight: 800;
+            font-size: 2.8rem;
+            font-weight: 900;
             margin-bottom: 20px;
             color: var(--gov-navy);
             line-height: 1.3;
@@ -319,78 +373,58 @@
             box-shadow: 0 6px 20px rgba(197, 160, 89, 0.3);
         }
 
-        .secondary-cta-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            background: transparent;
-            color: var(--gov-gold);
-            padding: 14px 25px;
-            border-radius: 8px;
-            text-decoration: none;
-            font-weight: 700;
-            font-size: 1.1rem;
-            border: 1px solid var(--gov-gold);
-            transition: all 0.3s ease;
-            cursor: pointer;
-        }
-
-        .secondary-cta-btn:hover {
-            background: rgba(197, 160, 89, 0.1);
-            transform: translateY(-2px);
-        }
-
-        /* About Section */
-        .about-grid {
+        /* Stats Counter Bar */
+        .stats-bar {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 30px;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 20px;
+            max-width: 1100px;
+            margin: -40px auto 50px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 10;
         }
 
-        .about-card {
+        .stat-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            border-top: 4px solid var(--gov-gold);
-            padding: 35px 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border-bottom: 4px solid var(--gov-gold);
+            padding: 25px 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease;
         }
 
-        .about-card:hover {
+        .stat-card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
         }
 
-        .about-card i {
-            font-size: 2.5rem;
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 900;
             color: var(--gov-gold);
-            margin-bottom: 20px;
+            margin-bottom: 5px;
         }
 
-        .about-card h3 {
-            font-size: 1.35rem;
-            margin-bottom: 12px;
-            color: var(--text-dark);
-        }
-
-        .about-card p {
+        .stat-label {
+            font-size: 0.95rem;
             color: var(--text-muted);
-            font-size: 0.98rem;
+            font-weight: 600;
         }
 
         /* Services Section */
         .services-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
             gap: 25px;
         }
 
         .service-box {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
-            padding: 30px 25px;
-            border-radius: 10px;
+            padding: 35px 25px;
+            border-radius: 12px;
             text-align: center;
             position: relative;
             overflow: hidden;
@@ -409,15 +443,15 @@
         }
 
         .service-box:hover {
-            transform: translateY(-5px);
+            transform: translateY(-6px);
             border-color: var(--gov-gold);
-            box-shadow: 0 10px 25px rgba(197, 160, 89, 0.15);
+            box-shadow: 0 12px 30px rgba(197, 160, 89, 0.15);
         }
 
         .service-box i {
-            font-size: 2.2rem;
+            font-size: 2.3rem;
             color: var(--gov-navy);
-            margin-bottom: 15px;
+            margin-bottom: 18px;
         }
 
         [data-theme="dark"] .service-box i {
@@ -427,7 +461,8 @@
         .service-box h3 {
             color: var(--text-dark);
             margin-bottom: 12px;
-            font-size: 1.2rem;
+            font-size: 1.25rem;
+            font-weight: 700;
         }
 
         .service-box p {
@@ -435,15 +470,89 @@
             font-size: 0.95rem;
         }
 
-        .reveal-item {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        /* Timeline Section */
+        .timeline-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+            position: relative;
+            margin-top: 20px;
         }
 
-        .reveal-item.revealed {
-            opacity: 1;
-            transform: translateY(0);
+        .timeline-step {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            padding: 30px 20px;
+            border-radius: 12px;
+            text-align: center;
+            position: relative;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        }
+
+        .step-number {
+            width: 45px;
+            height: 45px;
+            background: var(--gov-gold);
+            color: var(--gov-navy);
+            font-weight: 900;
+            font-size: 1.2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+        }
+
+        .timeline-step h3 {
+            font-size: 1.15rem;
+            margin-bottom: 10px;
+            color: var(--text-dark);
+        }
+
+        .timeline-step p {
+            font-size: 0.92rem;
+            color: var(--text-muted);
+        }
+
+        /* Awareness Articles Section */
+        .awareness-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+
+        .awareness-card {
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.04);
+            transition: transform 0.3s ease;
+        }
+
+        .awareness-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .awareness-header {
+            background: var(--gov-navy);
+            color: var(--gov-gold);
+            padding: 18px 20px;
+            font-weight: 700;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .awareness-body {
+            padding: 20px;
+        }
+
+        .awareness-body p {
+            color: var(--text-muted);
+            font-size: 0.95rem;
+            margin-bottom: 15px;
         }
 
         /* Report Form Section */
@@ -452,7 +561,7 @@
             border: 1px solid var(--border-color);
             border-top: 4px solid var(--gov-navy);
             padding: 40px;
-            border-radius: 12px;
+            border-radius: 14px;
             max-width: 750px;
             margin: 0 auto;
             width: 100%;
@@ -507,15 +616,15 @@
             min-height: 130px;
         }
 
-        /* Legal Agreement Checkbox Card Styles */
+        /* Legal Agreement Checkbox Card */
         .legal-box {
             display: flex;
             align-items: flex-start;
             gap: 12px;
             background: var(--card-bg);
-            border: 1px solid #e5e7eb;
-            border-radius: 14px;
-            padding: 18px;
+            border: 1px solid var(--border-color);
+            border-radius: 10px;
+            padding: 16px;
             transition: border-color 0.3s ease;
         }
 
@@ -526,10 +635,10 @@
         .legal-box input[type="checkbox"] {
             appearance: none;
             -webkit-appearance: none;
-            width: 22px;
-            height: 22px;
-            min-width: 22px;
-            min-height: 22px;
+            width: 20px;
+            height: 20px;
+            min-width: 20px;
+            min-height: 20px;
             border: 2px solid #cbd5e1;
             border-radius: 4px;
             outline: none;
@@ -543,22 +652,22 @@
         }
 
         .legal-box input[type="checkbox"]:checked {
-            background-color: #0B1F35;
-            border-color: #0B1F35;
+            background-color: var(--gov-navy);
+            border-color: var(--gov-navy);
         }
 
         .legal-box input[type="checkbox"]:checked::after {
             content: "\f00c";
             font-family: "Font Awesome 6 Free";
             font-weight: 900;
-            font-size: 12px;
+            font-size: 11px;
             color: #ffffff;
         }
 
         .legal-box label {
             font-family: 'Cairo', sans-serif;
             font-weight: 600;
-            font-size: 0.95rem;
+            font-size: 0.92rem;
             color: var(--text-dark);
             cursor: pointer;
             line-height: 1.6;
@@ -584,7 +693,7 @@
 
         .submit-btn {
             width: 100%;
-            background: #25D366; /* WhatsApp official brand color */
+            background: #25D366; /* WhatsApp brand color */
             color: #fff;
             padding: 15px;
             border: none;
@@ -609,102 +718,157 @@
             background: #94a3b8;
             cursor: not-allowed;
             transform: none;
-            box-shadow: none;
         }
 
-        /* Modal Popup */
-        .modal-overlay {
+        /* FAQ Section Styles */
+        .faq-section {
+            background-color: #143050;
+            padding: 60px 20px;
+            border-radius: 16px;
+            margin: 60px auto;
+            max-width: 1200px;
+            border: 1px solid var(--gov-gold);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .faq-section .section-title {
+            color: #ffffff;
+        }
+
+        .faq-section .section-title::after {
+            background: #C5A059;
+        }
+
+        .faq-container {
+            max-width: 850px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .faq-item {
+            background: rgba(11, 31, 53, 0.85);
+            border: 1px solid rgba(197, 160, 89, 0.3);
+            border-radius: 10px;
+            overflow: hidden;
+            transition: border-color 0.3s ease;
+        }
+
+        .faq-item.active {
+            border-color: #C5A059;
+        }
+
+        .faq-question {
+            padding: 18px 22px;
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #C5A059;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            user-select: none;
+            transition: background 0.2s ease;
+        }
+
+        .faq-question:hover {
+            background: rgba(197, 160, 89, 0.05);
+        }
+
+        .faq-question i {
+            transition: transform 0.3s ease;
+            color: #C5A059;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.35s ease, padding 0.35s ease;
+            padding: 0 22px;
+            color: #f8fafc;
+            font-size: 0.98rem;
+            line-height: 1.8;
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 250px;
+            padding: 0 22px 22px 22px;
+        }
+
+        /* Floating Emergency Button */
+        .emergency-btn-float {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(6, 18, 29, 0.8);
-            backdrop-filter: blur(5px);
+            bottom: 30px;
+            left: 30px;
+            background: #dc2626;
+            color: #ffffff;
+            padding: 14px 22px;
+            border-radius: 50px;
             display: flex;
             align-items: center;
-            justify-content: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1rem;
+            box-shadow: 0 4px 20px rgba(220, 38, 38, 0.4);
             z-index: 2000;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            animation: pulse-red 2s infinite;
+        }
+
+        .emergency-btn-float i {
+            font-size: 1.3rem;
+        }
+
+        .emergency-btn-float:hover {
+            background: #b91c1c;
+            transform: scale(1.05);
+        }
+
+        @keyframes pulse-red {
+            0% {
+                box-shadow: 0 0 0 0 rgba(220, 38, 38, 0.7);
+            }
+            70% {
+                box-shadow: 0 0 0 15px rgba(220, 38, 38, 0);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(220, 38, 38, 0);
+            }
+        }
+
+        .emergency-tooltip {
+            position: absolute;
+            right: 115%;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--gov-navy);
+            color: var(--gov-gold);
+            padding: 6px 12px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            white-space: nowrap;
+            pointer-events: none;
             opacity: 0;
             visibility: hidden;
             transition: opacity 0.3s ease, visibility 0.3s ease;
+            border: 1px solid var(--gov-gold);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            font-family: 'Cairo', sans-serif;
         }
 
-        .modal-overlay.active {
+        .emergency-btn-float:hover .emergency-tooltip {
             opacity: 1;
             visibility: visible;
         }
 
-        .modal-box {
-            background: var(--card-bg);
-            border: 2px solid var(--gov-gold);
-            padding: 35px 25px;
-            border-radius: 14px;
-            text-align: center;
-            max-width: 450px;
-            width: 90%;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
-            transform: scale(0.9);
-            transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-
-        .modal-overlay.active .modal-box {
-            transform: scale(1);
-        }
-
-        .modal-icon {
-            font-size: 3.5rem;
-            color: #25D366;
-            margin-bottom: 15px;
-        }
-
-        .modal-title {
-            font-size: 1.4rem;
-            color: var(--text-dark);
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        .modal-desc {
-            color: var(--text-muted);
-            font-size: 0.95rem;
-            margin-top: 10px;
-        }
-
-        /* Contact Section */
-        .contact-info {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            flex-wrap: wrap;
-        }
-
-        .contact-item {
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 10px;
-            border: 1px solid var(--border-color);
-            border-bottom: 4px solid var(--gov-gold);
-            min-width: 280px;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.03);
-        }
-
-        .contact-item i {
-            font-size: 2.2rem;
-            color: var(--gov-gold);
-            margin-bottom: 15px;
-        }
-
-        .contact-item h3 {
-            color: var(--text-dark);
-            margin-bottom: 8px;
-            font-size: 1.2rem;
-        }
-
-        .contact-item p {
-            color: var(--text-muted);
-            font-size: 0.98rem;
+        .emergency-btn-float.hidden {
+            display: none !important;
         }
 
         /* Footer */
@@ -712,61 +876,45 @@
             background-color: var(--gov-navy);
             border-top: 2px solid var(--gov-gold);
             text-align: center;
-            padding: 25px 20px;
+            padding: 30px 20px;
             color: #cbd5e1;
             font-size: 0.9rem;
+            margin-top: 60px;
         }
 
         footer p {
-            margin-bottom: 5px;
+            margin-bottom: 6px;
         }
 
         footer span {
             color: var(--gov-gold);
-        }
-
-        /* Back to Main View Button */
-        .back-to-main-btn {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: transparent;
-            border: 1px solid var(--gov-gold);
-            color: var(--gov-gold);
-            padding: 10px 20px;
-            border-radius: 8px;
-            cursor: pointer;
             font-weight: 700;
-            font-size: 0.95rem;
-            margin-bottom: 25px;
-            transition: all 0.3s ease;
         }
 
-        .back-to-main-btn:hover {
-            background: var(--gov-gold);
-            color: var(--gov-navy);
+        /* Reveal Animation Utility */
+        .reveal-item {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+        }
+
+        .reveal-item.revealed {
+            opacity: 1;
+            transform: translateY(0);
         }
 
         /* Mobile Responsive */
         @media (max-width: 768px) {
-            .gov-top-bar {
-                font-size: 0.75rem;
-                padding: 6px 10px;
-                flex-direction: column;
-                gap: 4px;
-                text-align: center;
-            }
-
             .menu-btn {
                 display: block;
             }
 
             .nav-links {
                 position: fixed;
-                top: 105px;
+                top: 75px;
                 right: -100%;
                 width: 100%;
-                height: calc(100vh - 105px);
+                height: calc(100vh - 75px);
                 background-color: var(--header-bg);
                 flex-direction: column;
                 align-items: center;
@@ -781,7 +929,7 @@
             }
 
             .hero-title {
-                font-size: 2rem;
+                font-size: 2.1rem;
             }
 
             .hero-subtitle {
@@ -796,46 +944,72 @@
 </head>
 <body data-theme="dark">
 
-    <!-- Top Announcement Marquee Bar -->
-    <div id="announcement-bar" style="background:#C5A059; color:#0B1F35; padding:8px; text-align:center; position:relative; overflow:hidden; white-space:nowrap; z-index:1002;">
-      <div style="display:inline-block; animation: marquee 12s linear infinite; font-weight:700; font-size:0.9rem;">
-        تنبيه هام: تم اضافة قسم جديد للبلاغ عن حالات ازعاج الطالبات داخل الحرم الجامعي - البلاغات تصل مباشرة لشؤون الطلاب بسرية تامة
-      </div>
-      <span id="close-bar" style="position:absolute; left:10px; top:50%; transform:translateY(-50%); cursor:pointer; font-weight:bold;">X</span>
+    <!-- Startup Popup Disclaimer Modal -->
+    <div class="modal-overlay active" id="startupPopup">
+        <div class="modal-box" style="text-align: right;">
+            <i class="fas fa-times modal-close-x" id="closeStartupX"></i>
+            <div style="text-align: center;">
+                <i class="fas fa-shield-halved modal-icon"></i>
+            </div>
+            <h3 class="modal-title" style="text-align: center;">تنويه هام قبل البدء</h3>
+            <div class="modal-desc">
+                منصة <strong>C.A.D</strong> هي مبادرة خاصة ومستقلة وليست جهة حكومية رسمية. نحن فريق تطوعي لمساعدة المتضررين من الجرائم الإلكترونية وتوجيههم للطريق الصحيح بسرية تامة.
+                <br><br>
+                <span style="color: var(--gov-gold); font-size: 0.9rem;">للبلاغات الرسمية: moi.gov.eg - 108 مباحث الإنترنت</span>
+            </div>
+            <button class="cta-btn" id="closeStartupBtn" style="width: 100%; justify-content: center;">فهمت وموافق، متابعة</button>
+        </div>
     </div>
 
-    <!-- Official Government Top Bar -->
-    <div class="gov-top-bar">
-        <div class="gov-info">
-            <span class="egypt-flag-emblem">
-                <i class="fas fa-landmark"></i> جمهورية مصر العربية
-            </span>
-            <span>| وزارة الداخلية</span>
-            <span style="display: none; @media(min-width:768px){display:inline;}">| قطاع نظم وتكنولوجيا المعلومات</span>
-        </div>
-        <div>
-            <span>الإدارة العامة لمكافحة جرائم التكنولوجيا</span>
+    <!-- Campus Harassment Coming Soon Modal -->
+    <div class="modal-overlay" id="campusModal">
+        <div class="modal-box">
+            <i class="fas fa-times modal-close-x" id="closeCampusX"></i>
+            <i class="fas fa-hourglass-half modal-icon" style="color: var(--gov-gold);"></i>
+            <h3 class="modal-title">قريباً</h3>
+            <p class="modal-desc">
+                قسم بلاغات الإزعاج داخل الحرم الجامعي سيكون متاحاً قريباً.<br>
+                نعمل حالياً على تطوير هذا القسم ليكون أكثر أماناً وسرية بالتعاون مع شؤون الطلاب.
+            </p>
+            <button class="cta-btn" id="closeCampusBtn" style="width: 100%; justify-content: center;">حسناً</button>
         </div>
     </div>
+
+    <!-- Success & Tracking ID Modal -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal-box">
+            <i class="fas fa-circle-check modal-icon" style="color: #25D366;"></i>
+            <h3 class="modal-title">تم تسجيل بلاغك بنجاح</h3>
+            <p class="modal-desc" id="trackingIdDisplay" style="font-weight: 700; color: var(--gov-gold); font-size: 1.1rem; margin-bottom: 10px;"></p>
+            <p class="modal-desc">جاري تحويلك الآن إلى القناة الرسمية عبر واتساب لاستكمال المتابعة...</p>
+        </div>
+    </div>
+
+    <!-- Floating Emergency Button -->
+    <a href="https://wa.me/201021431977?text=السلام%20عليكم%20-%20بلاغ%20طوارئ%20لرئيس%20قسم%20C.A.D%20-%20محتاج%20مساعدة%20فورية" target="_blank" class="emergency-btn-float" id="emergencyFloatBtn">
+        <i class="fab fa-whatsapp"></i>
+        <span>طوارئ</span>
+        <div class="emergency-tooltip">تواصل مباشر مع رئيس قسم C.A.D - طوارئ</div>
+    </a>
 
     <!-- Header / Navbar -->
     <header>
         <div class="navbar">
-            <a onclick="showMainPage()" class="logo-container" style="cursor: pointer;">
+            <a href="#home" class="logo-container">
                 <svg class="logo-emblem" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
                     <circle cx="50" cy="50" r="48" fill="#0B1F35" stroke="#C5A059" stroke-width="3"/>
                     <path d="M50 20 C42 20 38 28 38 35 C38 42 45 45 50 50 C55 45 62 42 62 35 C62 28 58 20 50 20 Z" fill="#C5A059"/>
                     <path d="M30 55 L50 75 L70 55 C70 55 75 75 50 85 C25 75 30 55 30 55 Z" fill="#C5A059"/>
                     <rect x="44" y="42" width="12" height="15" fill="#ffffff"/>
                 </svg>
-                
                 <div class="logo-text">
-                    مركز مكافحة الجرائم الإلكترونية
-                    <span>Cybercrime Anti-Defense - C.A.D</span>
+                    C.A.D
+                    <span>Cybercrime Anti-Defense</span>
                 </div>
             </a>
 
             <div class="nav-controls">
+                <span class="support-badge">مبادرة دعم خاصة</span>
                 <button class="theme-toggle" id="theme-toggle" title="تبديل الوضع">
                     <i class="fas fa-moon"></i>
                 </button>
@@ -845,328 +1019,312 @@
             </div>
 
             <ul class="nav-links" id="nav-links">
-                <li><a onclick="showMainPage('#home')">الرئيسية</a></li>
-                <li><a onclick="showMainPage('#about')">من نحن</a></li>
-                <li><a onclick="showMainPage('#services')">خدماتنا</a></li>
-                <li><a onclick="showMainPage('#report')">تقديم بلاغ</a></li>
-                <li><a onclick="showCollegePage()">بلاغ عن ازعاج من طلاب الكلية</a></li>
-                <li><a onclick="showMainPage('#contact')">تواصل معنا</a></li>
+                <li><a href="#home" class="active">الرئيسية</a></li>
+                <li><a href="#services">خدماتنا</a></li>
+                <li><a href="#timeline">خطوات العمل</a></li>
+                <li><a href="#awareness">التوعية السيبرانية</a></li>
+                <li><a href="#report">تقديم بلاغ</a></li>
+                <li><a href="#faq">الأسئلة الشائعة</a></li>
+                <li><a href="#" id="campusNavLink">إزعاج الحرم الجامعي</a></li>
             </ul>
         </div>
     </header>
 
-    <!-- MAIN PAGE CONTAINER -->
-    <div id="mainPage">
-        <!-- Home / Hero Section -->
-        <section id="home">
-            <div class="hero-badge">
-                <i class="fas fa-shield-alt"></i> البوابة الرسمية للاستجابة للبلاغات السيبرانية
+    <!-- Hero Section -->
+    <section id="home">
+        <div class="hero-badge">
+            <i class="fas fa-shield-alt"></i> حماية رقمية وتوجيه آمن
+        </div>
+        <h1 class="hero-title">تعرضت لجريمة إلكترونية؟<br>فريق C.A.D هنا لمساعدتك</h1>
+        <p class="hero-subtitle">منصة تطوعية مستقلة متخصصة في تقديم الاستشارات، توثيق الأدلة الرقمية، وتوجيه ضحايا الابتزاز، الاختراق، والاحتيال المالي للطريق الصحيح بأعلى معايير السرية.</p>
+        <div class="hero-buttons">
+            <a href="#report" class="cta-btn">
+                <i class="fas fa-file-shield"></i> تقديم بلاغ فوري
+            </a>
+            <a href="#services" class="cta-btn" style="background: transparent; color: var(--gov-gold);">
+                <i class="fas fa-info-circle"></i> تعرف على خدماتنا
+            </a>
+        </div>
+    </section>
+
+    <!-- Animated Statistics Bar -->
+    <div class="stats-bar reveal-item">
+        <div class="stat-card">
+            <div class="stat-number">+1,420</div>
+            <div class="stat-label">حالة تم توجيهها ومساعدتها</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">100%</div>
+            <div class="stat-label">سرية وأمان للبيانات</div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-number">24/7</div>
+            <div class="stat-label">استجابة سريعة</div>
+        </div>
+    </div>
+
+    <!-- Services Section -->
+    <section id="services">
+        <h2 class="section-title">مجالات الدعم والمساعدة</h2>
+        <div class="services-grid">
+            <div class="service-box reveal-item">
+                <i class="fas fa-user-secret"></i>
+                <h3>الابتزاز الإلكتروني</h3>
+                <p>مساعدة فورية وتوجيه قانوني ونفسي للمتضررين من التهديد بنشر صور أو بيانات شخصية عبر السوشيال ميديا.</p>
             </div>
-            <h1 class="hero-title">مركز مكافحة الجرائم الإلكترونية (C.A.D)</h1>
-            <p class="hero-subtitle">حماية متكاملة للحقوق والبيانات الرقمية في إطار سيادة القانون. نوفر الآليات الرسمية والآمنة للتصدي لاختراقات الحسابات، النصب المالي، والابتزاز الإلكتروني بأعلى معايير السرية والسرعة.</p>
-            <div class="hero-buttons">
-                <a href="#report" class="cta-btn" onclick="showMainPage('#report')">
-                    <i class="fas fa-file-shield"></i> تقديم بلاغ رسمي فوري
-                </a>
-                <button class="secondary-cta-btn" id="openGuideBtn">
-                    <i class="fas fa-question-circle"></i> كيف تبلغ عن حالة ازعاج؟
+            <div class="service-box reveal-item">
+                <i class="fas fa-laptop-code"></i>
+                <h3>اختراق الحسابات</h3>
+                <p>خطوات استعادة وتأمين الحسابات المخترقة (فيسبوك، إنستجرام، واتساب، البريد الإلكتروني وغيرها).</p>
+            </div>
+            <div class="service-box reveal-item">
+                <i class="fas fa-vault"></i>
+                <h3>نصب واحتيال مالي إلكتروني</h3>
+                <p>توجيه ضحايا منصات النصب الوهمية، عمليات التحويل المشبوهة، وسرقة المحافظ الإلكترونية.</p>
+            </div>
+            <div class="service-box reveal-item">
+                <i class="fas fa-id-badge"></i>
+                <h3>انتحال الشخصية والتشهير</h3>
+                <p>التعامل مع الحسابات المزيفة التي تستهدف الإساءة للسمعة أو ترويج معلومات كاذبة.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Timeline / Workflow Section -->
+    <section id="timeline">
+        <h2 class="section-title">كيف نعمل لمساعدتك؟</h2>
+        <div class="timeline-container">
+            <div class="timeline-step reveal-item">
+                <div class="step-number">1</div>
+                <h3>توثيق</h3>
+                <p>جمع وتوثيق الأدلة الرقمية (سكرين شوت، روابط، توقيتات) بدقة عالية.</p>
+            </div>
+            <div class="timeline-step reveal-item">
+                <div class="step-number">2</div>
+                <h3>تحليل</h3>
+                <p>فحص تفاصيل الواقعة وتقييم حجم الخطورة والثغرة المستخدمة.</p>
+            </div>
+            <div class="timeline-step reveal-item">
+                <div class="step-number">3</div>
+                <h3>توجيه</h3>
+                <p>رسم خطوة بخطوة للحل القانوني أو التقني المناسب للحالة.</p>
+            </div>
+            <div class="timeline-step reveal-item">
+                <div class="step-number">4</div>
+                <h3>متابعة</h3>
+                <p>مرافقة الضحية عبر قناة واتساب الآمنة حتى تمام تأمين الحالة.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Awareness Section -->
+    <section id="awareness">
+        <h2 class="section-title">التوعية السيبرانية</h2>
+        <div class="awareness-grid">
+            <div class="awareness-card reveal-item">
+                <div class="awareness-header">
+                    <i class="fas fa-shield-cat"></i> كيف تحمي حسابك من الاختراق؟
+                </div>
+                <div class="awareness-body">
+                    <p>استخدم كلمات مرور قوية ومعقدة، وقم بتفعيل التحقق بخطوتين (2FA) على كافة حساباتك الشخصية وعدم الضغط على أي روابط غير معروفة.</p>
+                </div>
+            </div>
+            <div class="awareness-card reveal-item">
+                <div class="awareness-header">
+                    <i class="fas fa-triangle-exclamation"></i> ماذا تفعل عند التعرض للابتزاز؟
+                </div>
+                <div class="awareness-body">
+                    <p>لا تستجب لمطالب المبتز نهائياً، احتفظ فوراً بكافة الأدلة (الدردشات والروابط)، ولا تقم بمسح أي شيء، وتواصل معنا فوراً للحصول على الدعم.</p>
+                </div>
+            </div>
+            <div class="awareness-card reveal-item">
+                <div class="awareness-header">
+                    <i class="fas fa-link-slash"></i> كيف تكشف الروابط الوهمية؟
+                </div>
+                <div class="awareness-body">
+                    <p>تحقق جيداً من اسم النطاق (Domain) قبل إدخال بياناتك، فالروابط الاحتيالية غالباً ما تحتوي على حروف إضافية أو نطاقات غير رسمية.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Report Form Section -->
+    <section id="report">
+        <h2 class="section-title">منظومة تلقي البلاغات والطلبات</h2>
+        <div class="form-container reveal-item">
+            <form id="reportForm" novalidate>
+                <div class="form-group">
+                    <label for="fullName">الاسم (اختياري)</label>
+                    <input type="text" id="fullName" class="form-control" placeholder="يمكنك كتابة اسمك أو اسم مستعار">
+                </div>
+                
+                <div class="form-group">
+                    <label for="contactPhone">رقم هاتف التواصل <span class="required">*</span></label>
+                    <input type="tel" id="contactPhone" class="form-control" placeholder="أدخل رقم هاتفك للتواصل عبر واتساب">
+                    <div class="error-message"><i class="fas fa-circle-exclamation"></i> يرجى إدخال رقم هاتف صحيح</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="targetUser">معرف المشتبه به / الحساب (رقم/رابط/يوزر)</label>
+                    <input type="text" id="targetUser" class="form-control" placeholder="رقم هاتف أو رابط حساب الحساب المشتبه به إن وجد">
+                </div>
+
+                <div class="form-group">
+                    <label for="crimeType">نوع الجريمة / المشكلة <span class="required">*</span></label>
+                    <select id="crimeType" class="form-control">
+                        <option value="" disabled selected>اختر نوع التصنيف...</option>
+                        <option value="ابتزاز إلكتروني">ابتزاز إلكتروني وتهديد</option>
+                        <option value="اختراق حسابات">اختراق حسابات شخصية</option>
+                        <option value="نصب واحتيال مالي">نصب واحتيال مالي إلكتروني</option>
+                        <option value="انتحال شخصية وتشهير">انتحال شخصية وتشهير</option>
+                        <option value="إزعاج ومضايقات إلكترونية">إزعاج ومضايقات إلكترونية</option>
+                        <option value="استشارة تقنية أخرى">استشارة تقنية أو أمنية أخرى</option>
+                    </select>
+                    <div class="error-message"><i class="fas fa-circle-exclamation"></i> يرجى اختيار نوع التصنيف</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="reportDetails">تفاصيل الواقعة <span class="required">*</span></label>
+                    <textarea id="reportDetails" class="form-control" placeholder="اكتب شرحاً وافياً لما حدث معك بالتفصيل..."></textarea>
+                    <div class="error-message"><i class="fas fa-circle-exclamation"></i> يرجى كتابة تفاصيل الواقعة</div>
+                </div>
+
+                <!-- Legal Agreement Checkbox Card -->
+                <div class="form-group">
+                    <div class="legal-box" id="legalBoxContainer">
+                        <input type="checkbox" id="legalAgreement" required>
+                        <label for="legalAgreement">
+                            أقر بأن البيانات المدخلة صحيحة، وأتحمل مسؤولية بلاغي، وأوافق على سياسة السرية والخصوصية الخاصة بالمنصة.
+                        </label>
+                    </div>
+                    <div class="error-message"><i class="fas fa-circle-exclamation"></i> يجب الموافقة على الإقرار للمتابعة</div>
+                </div>
+
+                <button type="submit" class="submit-btn" id="submitBtn">
+                    <i class="fab fa-whatsapp"></i> <span id="submitBtnText">إرسال البلاغ عبر واتساب</span>
                 </button>
-            </div>
-        </section>
+            </form>
+        </div>
+    </section>
 
-        <!-- Guide Modal -->
-        <div class="modal-overlay" id="guideModal">
-            <div class="modal-box" style="text-align: right;">
-                <h3 class="modal-title" style="text-align: center; margin-bottom: 20px;">كيف تبلغ عن حالة إزعاج؟</h3>
-                <div style="color: var(--text-muted); font-size: 0.98rem; line-height: 2.2; margin-bottom: 25px;">
-                    <p><strong>1-</strong> اضغط على الـ 3 شرط ☰</p>
-                    <p><strong>2-</strong> اختر بلاغ عن ازعاج من طلاب الكلية</p>
-                    <p><strong>3-</strong> هتنتقل لواجهة جديدة منفصلة املأ بياناتك بسرية</p>
+    <!-- FAQ Section -->
+    <section id="faq" class="faq-section reveal-item">
+        <h2 class="section-title">الأسئلة الشائعة</h2>
+        <div class="faq-container">
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>هل منصة C.A.D جهة حكومية؟</span>
+                    <i class="fas fa-chevron-down"></i>
                 </div>
-                <div style="display: flex; gap: 10px; flex-direction: column;">
-                    <button class="cta-btn" onclick="closeGuideAndOpenCollege()" style="width: 100%; justify-content: center;">اذهب لصفحة البلاغ</button>
-                    <button class="secondary-cta-btn" id="closeGuideModal" style="width: 100%; justify-content: center; border-color: var(--border-color); color: var(--text-muted);">إغلاق</button>
+                <div class="faq-answer">
+                    لا، نحن مبادرة خاصة ومستقلة وليست جهة حكومية رسمية، هدفنا المساعدة والتوجيه بسرية.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>هل بياناتي سرية؟</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    نعم 100% بسرية تامة ولا يتم نشرها.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>كيف يتم التعامل مع البلاغ؟</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    يتم توثيقه وتحليله وتوجيهك للخطوات الصحيحة والرسمية.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>هل الخدمة مجانية؟</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    نعم، الدعم تطوعي ومجاني بالكامل.
+                </div>
+            </div>
+            <div class="faq-item">
+                <div class="faq-question">
+                    <span>ماذا أفعل في حالة الطوارئ؟</span>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+                <div class="faq-answer">
+                    استخدم زر طوارئ رئيس قسم C.A.D للتواصل الفوري.
                 </div>
             </div>
         </div>
-
-        <!-- About Section -->
-        <section id="about">
-            <h2 class="section-title">عن المركز</h2>
-            <div class="about-grid">
-                <div class="about-card">
-                    <i class="fas fa-balance-scale"></i>
-                    <h3>الإطار القانوني والأمني</h3>
-                    <p>نعمل وفقاً للقوانين المصرية المنظمة لتكنولوجيا المعلومات وحماية البيانات الشخصية وحفظ الأمن القومي الرقمي.</p>
-                </div>
-                <div class="about-card">
-                    <i class="fas fa-user-secret"></i>
-                    <h3>السرية والخصوصية التامة</h3>
-                    <p>نضمن لجميع المواطنين التعامل مع كافة البيانات والشكاوى الواردة بأقصى درجات السرية التعديلية والأمن السيبراني المشفر.</p>
-                </div>
-                <div class="about-card">
-                    <i class="fas fa-headset"></i>
-                    <h3>استجابة سريعة وفورية</h3>
-                    <p>فريق متخصص من الخبراء الفنيين والقانونيين جاهز للتعامل مع مختلف البلاغات الطارئة على مدار الساعة.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Services Section -->
-        <section id="services">
-            <h2 class="section-title">خدمات المركز</h2>
-            <div class="services-grid">
-                <div class="service-box">
-                    <i class="fas fa-user-shield"></i>
-                    <h3>مكافحة الابتزاز الإلكتروني</h3>
-                    <p>تلقي وفحص بلاغات الابتزاز الشخصي عبر منصات التواصل الاجتماعي وتأمين المتضررين.</p>
-                </div>
-                <div class="service-box">
-                    <i class="fas fa-university"></i>
-                    <h3>تتبع الاحتيال المالي الرقمي</h3>
-                    <p>المساعدة في التعامل مع جرائم النصب الإلكتروني والتحويلات المصرفية المشبوهة والتطبيقات الوهمية.</p>
-                </div>
-                <div class="service-box">
-                    <i class="fas fa-laptop-code"></i>
-                    <h3>التحقيق الرقمي وفحص الاختراقات</h3>
-                    <p>كشف ومعالجة ثغرات الأمان والوصول غير المشروع للحسابات والأنظمة الشخصية.</p>
-                </div>
-                <div class="service-box">
-                    <i class="fas fa-shield-halved"></i>
-                    <h3>الاستشارات والدعم الوقائي</h3>
-                    <p>توجيه المواطنين والإرشادات التوعوية لتجنب الوقوع ضحية للجرائم السيبرانية المستحدثة.</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- Report Section -->
-        <section id="report">
-            <h2 class="section-title">منظومة تلقي البلاغات الرسمية</h2>
-            <div class="form-container">
-                <form id="reportForm" novalidate>
-                    <div class="form-group">
-                        <label for="fullName">الاسم الكامل (كما هو في البطاقة الشخصية) <span class="required">*</span></label>
-                        <input type="text" id="fullName" class="form-control" placeholder="أدخل اسمك ثلاثي أو رباعي">
-                        <div class="error-message"><i class="fas fa-circle-exclamation"></i> يرجى إدخال الاسم الكامل</div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="contactPhone">رقم هاتف المبلغ للتواصل <span class="required">*</span></label>
-                        <input type="tel" id="contactPhone" class="form-control" placeholder="أدخل رقم هاتفك المحمول">
-                        <div class="error-message"><i class="fas fa-circle-exclamation"></i> يرجى إدخال رقم هاتف صحيح للتواصل</div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="targetPhone">رقم المبلغ عليه / الحساب المشتبه به (اختياري)</label>
-                        <input type="text" id="targetPhone" class="form-control" placeholder="رقم الهاتف أو رابط الحساب المشتبه به إن وجد">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="reportType">نوع البلاغ <span class="required">*</span></label>
-                        <select id="reportType" class="form-control">
-                            <option value="" disabled selected>اختر تصنيف البلاغ...</option>
-                            <option value="ابتزاز الكتروني">ابتزاز الكتروني</option>
-                            <option value="نصب واحتيال مالي">نصب واحتيال مالي</option>
-                            <option value="اختراق حسابات">اختراق حسابات</option>
-                            <option value="تشهير">تشهير وإساءة سمعة</option>
-                            <option value="اخرى">بلاغ إلكتروني آخر</option>
-                        </select>
-                        <div class="error-message"><i class="fas fa-circle-exclamation"></i> يرجى اختيار نوع البلاغ</div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="reportDetails">تفاصيل البلاغ والواقعة <span class="required">*</span></label>
-                        <textarea id="reportDetails" class="form-control" placeholder="اكتب شرحاً وافياً لتفاصيل الواقعة والضرر الواقع عليك..."></textarea>
-                        <div class="error-message"><i class="fas fa-circle-exclamation"></i> يرجى كتابة تفاصيل البلاغ</div>
-                    </div>
-
-                    <!-- Legal Agreement Checkbox Card -->
-                    <div class="form-group">
-                        <div class="legal-box" id="legalBoxContainer">
-                            <input type="checkbox" id="legalAgreement" required>
-                            <label for="legalAgreement">
-                                أقر بأن البيانات صحيحة وأتحمل المسؤولية القانونية عن أي بلاغ كاذب طبقا للمادة 305 من قانون العقوبات، وأوافق على سياسة الخصوصية.
-                            </label>
-                        </div>
-                        <div class="error-message"><i class="fas fa-circle-exclamation"></i> يجب الموافقة على الإقرار القانوني</div>
-                    </div>
-
-                    <button type="submit" class="submit-btn" id="submitBtn">
-                        <i class="fab fa-whatsapp"></i> <span id="submitBtnText">إرسال البلاغ ومتابعته عبر واتساب</span>
-                    </button>
-                </form>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section id="contact">
-            <h2 class="section-title">قنوات التواصل الرسمية</h2>
-            <div class="contact-info">
-                <div class="contact-item">
-                    <i class="fab fa-whatsapp"></i>
-                    <h3>الخط السريع للواتساب</h3>
-                    <p style="direction: ltr; font-weight: 700;">+20 1210233693</p>
-                </div>
-                <div class="contact-item">
-                    <i class="fas fa-shield-cat"></i>
-                    <h3>قطاع نظم وتكنولوجيا المعلومات</h3>
-                    <p>استجابة فورية وحماية لبيانات وحقوق المواطنين</p>
-                </div>
-            </div>
-        </section>
-    </div>
-
-    <!-- COLLEGE PAGE CONTAINER (VIRTUAL SEPARATE PAGE) -->
-    <div id="collegePage" style="display: none;">
-        <section style="min-height: auto; padding-top: 40px;">
-            <button class="back-to-main-btn" onclick="showMainPage()">
-                <i class="fas fa-arrow-right"></i> العودة للرئيسية
-            </button>
-            <h2 class="section-title">بلاغ عن ازعاج من طلاب الكلية - سري ويصل لشؤون الطلبة</h2>
-            <div class="form-container">
-                <form id="collegeReportForm" novalidate>
-                    <div class="form-group">
-                        <label for="collegeFullName">اسم المبلغة (سري)</label>
-                        <input type="text" id="collegeFullName" class="form-control" placeholder="أدخل اسمك (اختياري / سرية تامة)">
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="collegeContactPhone">رقم هاتف التواصل</label>
-                        <input type="tel" id="collegeContactPhone" class="form-control" placeholder="رقم هاتفك للمتابعة">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="collegeTargetUser">رقم / يوزر المزعج <span class="required">*</span></label>
-                        <input type="text" id="collegeTargetUser" class="form-control" placeholder="رقم الهاتف أو اليوزر أو اسم الشخص المشتبه به">
-                        <div class="error-message"><i class="fas fa-circle-exclamation"></i> يرجى إدخال رقم أو يوزر المزعج</div>
-                    </div>
-
-                    <div class="form-group">
-                        <label for="collegeNameField">الكلية</label>
-                        <input type="text" id="collegeNameField" class="form-control" placeholder="اسم الكلية التابعة لها">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="collegeLocation">مكان الواقعة</label>
-                        <input type="text" id="collegeLocation" class="form-control" placeholder="مثال: قاعة المحاضرات، الساحة، البوابة...">
-                    </div>
-
-                    <div class="form-group">
-                        <label for="collegeDetails">ايه اللي حصل <span class="required">*</span></label>
-                        <textarea id="collegeDetails" class="form-control" placeholder="اكتب تفاصيل الواقعة وما حدث معكِ بالتفصيل..."></textarea>
-                        <div class="error-message"><i class="fas fa-circle-exclamation"></i> يرجى كتابة تفاصيل الواقعة</div>
-                    </div>
-
-                    <!-- Legal Agreement Checkbox Card -->
-                    <div class="form-group">
-                        <div class="legal-box">
-                            <input type="checkbox" id="collegeLegalAgreement" required>
-                            <label for="collegeLegalAgreement">
-                                أقر بأن البيانات صحيحة وأتحمل المسؤولية القانونية عن أي بلاغ كاذب طبقا للمادة 305 من قانون العقوبات، وأوافق على سياسة الخصوصية.
-                            </label>
-                        </div>
-                        <div class="error-message"><i class="fas fa-circle-exclamation"></i> يجب الموافقة على الإقرار القانوني</div>
-                    </div>
-
-                    <button type="submit" class="submit-btn" id="collegeSubmitBtn">
-                        <i class="fab fa-whatsapp"></i> <span id="collegeSubmitBtnText">إرسال البلاغ لشؤون الطلاب عبر واتساب</span>
-                    </button>
-                </form>
-            </div>
-        </section>
-    </div>
-
-    <!-- Success Modal Shared -->
-    <div class="modal-overlay" id="successModal">
-        <div class="modal-box">
-            <i class="fas fa-circle-check modal-icon"></i>
-            <h3 class="modal-title" id="modalTitleText">تم استلام بلاغك بنجاح</h3>
-            <p class="modal-desc" id="modalDescText">جاري تحويلك الآن إلى القناة الرسمية عبر واتساب لاستكمال الإجراءات...</p>
-        </div>
-    </div>
+    </section>
 
     <!-- Footer -->
     <footer>
-        <p>جمهورية مصر العربية &bull; وزارة الداخلية &bull; قطاع نظم وتكنولوجيا المعلومات</p>
-        <p>جميع الحقوق محفوظة &copy; 2026 - <span>مركز مكافحة الجرائم الإلكترونية (C.A.D)</span></p>
+        <p><strong>C.A.D</strong> مبادرة خاصة مستقلة غير حكومية - ليست تابعة لأي جهة رسمية.</p>
+        <p>جميع الحقوق محفوظة &copy; 2026 - <span>Cybercrime Anti-Defense</span></p>
     </footer>
 
     <!-- Scripts -->
     <script>
-        // Announcement Bar Marquee Logic
-        const announcementBar = document.getElementById('announcement-bar');
-        const closeBarBtn = document.getElementById('close-bar');
+        // Startup Popup Logic
+        const startupPopup = document.getElementById('startupPopup');
+        const closeStartupBtn = document.getElementById('closeStartupBtn');
+        const closeStartupX = document.getElementById('closeStartupX');
+        const emergencyFloatBtn = document.getElementById('emergencyFloatBtn');
 
-        if (localStorage.getItem('barClosed') === 'true') {
-            if (announcementBar) announcementBar.style.display = 'none';
-        }
-
-        if (closeBarBtn) {
-            closeBarBtn.addEventListener('click', () => {
-                if (announcementBar) announcementBar.style.display = 'none';
-                localStorage.setItem('barClosed', 'true');
-            });
-        }
-
-        // Single Page Navigation Engine (Window Scope)
-        const mainPage = document.getElementById('mainPage');
-        const collegePage = document.getElementById('collegePage');
-        const navLinks = document.getElementById('nav-links');
-
-        window.showMainPage = function(targetHash) {
-            collegePage.style.display = 'none';
-            mainPage.style.display = 'block';
-            if (navLinks) navLinks.classList.remove('active');
-            if (targetHash) {
-                const targetElement = document.querySelector(targetHash);
-                if (targetElement) {
-                    targetElement.scrollIntoView({ behavior: 'smooth' });
-                }
+        function updateEmergencyButtonVisibility() {
+            if (startupPopup && startupPopup.classList.contains('active')) {
+                if (emergencyFloatBtn) emergencyFloatBtn.classList.add('hidden');
             } else {
-                window.scrollTo(0, 0);
+                if (emergencyFloatBtn) emergencyFloatBtn.classList.remove('hidden');
             }
-        };
-
-        window.showCollegePage = function() {
-            mainPage.style.display = 'none';
-            collegePage.style.display = 'block';
-            if (navLinks) navLinks.classList.remove('active');
-            window.scrollTo(0, 0);
-        };
-
-        function closeGuideAndOpenCollege() {
-            const guideModal = document.getElementById('guideModal');
-            if (guideModal) guideModal.classList.remove('active');
-            showCollegePage();
         }
 
-        // Guide Modal Logic
-        const openGuideBtn = document.getElementById('openGuideBtn');
-        const guideModal = document.getElementById('guideModal');
-        const closeGuideModal = document.getElementById('closeGuideModal');
+        if (localStorage.getItem('cad_popup_closed') === 'true') {
+            if (startupPopup) startupPopup.classList.remove('active');
+        }
 
-        if (openGuideBtn) {
-            openGuideBtn.addEventListener('click', () => {
-                if (guideModal) guideModal.classList.add('active');
+        updateEmergencyButtonVisibility();
+
+        function closeStartupModal() {
+            if (startupPopup) startupPopup.classList.remove('active');
+            localStorage.setItem('cad_popup_closed', 'true');
+            updateEmergencyButtonVisibility();
+        }
+
+        if (closeStartupBtn) closeStartupBtn.addEventListener('click', closeStartupModal);
+        if (closeStartupX) closeStartupX.addEventListener('click', closeStartupModal);
+
+        // Campus Harassment Modal Logic
+        const campusNavLink = document.getElementById('campusNavLink');
+        const campusModal = document.getElementById('campusModal');
+        const closeCampusBtn = document.getElementById('closeCampusBtn');
+        const closeCampusX = document.getElementById('closeCampusX');
+
+        if (campusNavLink) {
+            campusNavLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (campusModal) campusModal.classList.add('active');
             });
         }
 
-        if (closeGuideModal) {
-            closeGuideModal.addEventListener('click', () => {
-                if (guideModal) guideModal.classList.remove('active');
+        function closeCampusModalFunc() {
+            if (campusModal) campusModal.classList.remove('active');
+        }
+
+        if (closeCampusBtn) closeCampusBtn.addEventListener('click', closeCampusModalFunc);
+        if (closeCampusX) closeCampusX.addEventListener('click', closeCampusModalFunc);
+
+        if (campusModal) {
+            campusModal.addEventListener('click', (e) => {
+                if (e.target === campusModal) closeCampusModalFunc();
             });
         }
 
-        if (guideModal) {
-            guideModal.addEventListener('click', (e) => {
-                if (e.target === guideModal) {
-                    guideModal.classList.remove('active');
-                }
-            });
-        }
-
-        // Mobile Menu Toggle & Outside Click
+        // Mobile Menu Toggle
         const menuBtn = document.getElementById('menu-btn');
+        const navLinks = document.getElementById('nav-links');
 
         if (menuBtn && navLinks) {
             menuBtn.addEventListener('click', (e) => {
@@ -1178,6 +1336,12 @@
                 if (!navLinks.contains(e.target) && !menuBtn.contains(e.target)) {
                     navLinks.classList.remove('active');
                 }
+            });
+
+            navLinks.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', () => {
+                    navLinks.classList.remove('active');
+                });
             });
         }
 
@@ -1213,42 +1377,43 @@
             });
         }
 
-        // Animate On Scroll (AOS) Implementation
-        const cardsToAnimate = document.querySelectorAll('.about-card, .service-box');
-        
-        cardsToAnimate.forEach((card) => {
-            card.classList.add('reveal-item');
+        // FAQ Accordion Logic
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                const isActive = item.classList.contains('active');
+                faqItems.forEach(otherItem => otherItem.classList.remove('active'));
+                if (!isActive) {
+                    item.classList.add('active');
+                }
+            });
         });
 
+        // Animate On Scroll (IntersectionObserver)
+        const revealItems = document.querySelectorAll('.reveal-item');
+        
         const revealObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
-                    const grid = entry.target.parentElement;
-                    const children = Array.from(grid.children).filter(child => child.classList.contains('reveal-item'));
-                    
-                    children.forEach((child, index) => {
-                        setTimeout(() => {
-                            child.classList.add('revealed');
-                        }, index * 100);
-                    });
-
+                    entry.target.classList.add('revealed');
                     revealObserver.unobserve(entry.target);
                 }
             });
-        }, { threshold: 0.15 });
+        }, { threshold: 0.1 });
 
-        cardsToAnimate.forEach(card => revealObserver.observe(card));
+        revealItems.forEach(item => revealObserver.observe(item));
 
-        // Form Validation & Submission Flow (Original Cybercrime Form)
+        // Form Validation & Submission with Auto Tracking ID
         const reportForm = document.getElementById('reportForm');
         const submitBtn = document.getElementById('submitBtn');
         const submitBtnText = document.getElementById('submitBtnText');
-        const modal = document.getElementById('successModal');
+        const successModal = document.getElementById('successModal');
         const legalAgreementInput = document.getElementById('legalAgreement');
 
-        ['fullName', 'contactPhone', 'reportType', 'reportDetails'].forEach(id => {
+        ['contactPhone', 'crimeType', 'reportDetails'].forEach(id => {
             const input = document.getElementById(id);
-            if(input) {
+            if (input) {
                 input.addEventListener('input', () => {
                     input.parentElement.classList.remove('invalid');
                 });
@@ -1260,36 +1425,31 @@
             }
         });
 
-        if(legalAgreementInput) {
+        if (legalAgreementInput) {
             legalAgreementInput.addEventListener('change', () => {
                 legalAgreementInput.closest('.form-group').classList.remove('invalid');
             });
         }
 
-        if(reportForm) {
+        if (reportForm) {
             reportForm.addEventListener('submit', async function(e) {
                 e.preventDefault();
 
                 const fullNameInput = document.getElementById('fullName');
                 const contactPhoneInput = document.getElementById('contactPhone');
-                const reportTypeInput = document.getElementById('reportType');
+                const targetUserInput = document.getElementById('targetUser');
+                const crimeTypeInput = document.getElementById('crimeType');
                 const reportDetailsInput = document.getElementById('reportDetails');
-                const targetPhoneInput = document.getElementById('targetPhone');
 
                 let isValid = true;
-
-                if (!fullNameInput.value.trim()) {
-                    fullNameInput.parentElement.classList.add('invalid');
-                    isValid = false;
-                }
 
                 if (!contactPhoneInput.value.trim()) {
                     contactPhoneInput.parentElement.classList.add('invalid');
                     isValid = false;
                 }
 
-                if (!reportTypeInput.value) {
-                    reportTypeInput.parentElement.classList.add('invalid');
+                if (!crimeTypeInput.value) {
+                    crimeTypeInput.parentElement.classList.add('invalid');
                     isValid = false;
                 }
 
@@ -1307,26 +1467,30 @@
 
                 submitBtn.disabled = true;
 
-                document.getElementById('modalTitleText').textContent = 'تم استلام بلاغك بنجاح';
-                document.getElementById('modalDescText').textContent = 'جاري تحويلك الآن إلى القناة الرسمية عبر واتساب لاستكمال الإجراءات...';
-                modal.classList.add('active');
+                // Generate Auto-ID like CAD-2026-XXXX
+                const randomNum = Math.floor(1000 + Math.random() * 9000);
+                const trackingId = `CAD-2026-${randomNum}`;
 
-                const fullName = fullNameInput.value.trim();
-                const contactPhone = contactPhoneInput.value.trim();
-                const targetPhone = targetPhoneInput.value.trim() || 'غير محدد';
-                const reportType = reportTypeInput.value;
-                const reportDetails = reportDetailsInput.value.trim();
+                document.getElementById('trackingIdDisplay').textContent = `رقم التتبع: ${trackingId}`;
+                successModal.classList.add('active');
+
+                const fName = fullNameInput.value.trim() || 'فاعل خير (غير مُسجل)';
+                const cPhone = contactPhoneInput.value.trim();
+                const tUser = targetUserInput.value.trim() || 'غير محدد';
+                const cType = crimeTypeInput.value;
+                const rDetails = reportDetailsInput.value.trim();
                 const targetWhatsappNumber = "201210233693";
 
-                let message = `[بلاغ رسمي - مركز C.A.D]
-اسم المبلغ: ${fullName}
-رقم التواصل: ${contactPhone}
-رقم المبلغ عليه: ${targetPhone}
-نوع البلاغ: ${reportType}
-تفاصيل البلاغ:
-${reportDetails}
+                let message = `[بلاغ جديد - منصة C.A.D]
+رقم التتبع: ${trackingId}
+اسم المُبلغ: ${fName}
+رقم التواصل: ${cPhone}
+المعرف المشتبه به: ${tUser}
+نوع الجريمة: ${cType}
+التفاصيل:
+${rDetails}
 
-[تم الإقرار بصحة البيانات والمسؤولية القانونية طبقا للمادة 305 من قانون العقوبات]`;
+[تم الإقرار بصحة البيانات وموافقة شروط المنصة التطوعية]`;
 
                 setTimeout(() => {
                     const encodedMessage = encodeURIComponent(message);
@@ -1334,97 +1498,10 @@ ${reportDetails}
                     window.open(whatsappUrl, '_blank');
                     
                     submitBtn.disabled = false;
-                    submitBtnText.textContent = 'إرسال البلاغ ومتابعته عبر واتساب';
-
-                    modal.classList.remove('active');
+                    submitBtnText.textContent = 'إرسال البلاغ عبر واتساب';
+                    successModal.classList.remove('active');
                     reportForm.reset();
-                }, 2000);
-            });
-        }
-
-        // College Harassment Form Submission Logic
-        const collegeReportForm = document.getElementById('collegeReportForm');
-        const collegeSubmitBtn = document.getElementById('collegeSubmitBtn');
-        const collegeSubmitBtnText = document.getElementById('collegeSubmitBtnText');
-        const collegeLegalAgreement = document.getElementById('collegeLegalAgreement');
-
-        ['collegeTargetUser', 'collegeDetails'].forEach(id => {
-            const input = document.getElementById(id);
-            if(input) {
-                input.addEventListener('input', () => {
-                    input.parentElement.classList.remove('invalid');
-                });
-            }
-        });
-
-        if(collegeLegalAgreement) {
-            collegeLegalAgreement.addEventListener('change', () => {
-                collegeLegalAgreement.closest('.form-group').classList.remove('invalid');
-            });
-        }
-
-        if(collegeReportForm) {
-            collegeReportForm.addEventListener('submit', async function(e) {
-                e.preventDefault();
-
-                const collegeTargetUserInput = document.getElementById('collegeTargetUser');
-                const collegeDetailsInput = document.getElementById('collegeDetails');
-
-                let isValid = true;
-
-                if (!collegeTargetUserInput.value.trim()) {
-                    collegeTargetUserInput.parentElement.classList.add('invalid');
-                    isValid = false;
-                }
-
-                if (!collegeDetailsInput.value.trim()) {
-                    collegeDetailsInput.parentElement.classList.add('invalid');
-                    isValid = false;
-                }
-
-                if (!collegeLegalAgreement.checked) {
-                    collegeLegalAgreement.closest('.form-group').classList.add('invalid');
-                    isValid = false;
-                }
-
-                if (!isValid) return;
-
-                collegeSubmitBtn.disabled = true;
-
-                document.getElementById('modalTitleText').textContent = 'تم الاستلام بنجاح';
-                document.getElementById('modalDescText').textContent = 'جاري تحويلك الآن إلى شؤون الطلاب عبر واتساب...';
-                modal.classList.add('active');
-
-                const fName = document.getElementById('collegeFullName').value.trim() || 'غير محدد (سري)';
-                const cPhone = document.getElementById('collegeContactPhone').value.trim() || 'غير محدد';
-                const tUser = collegeTargetUserInput.value.trim();
-                const cName = document.getElementById('collegeNameField').value.trim() || 'غير محدد';
-                const cLoc = document.getElementById('collegeLocation').value.trim() || 'غير محدد';
-                const cDetails = collegeDetailsInput.value.trim();
-                const targetWhatsappNumber = "201210233693";
-
-                let message = `[بلاغ إزعاج داخل الحرم الجامعي - شؤون الطلاب]
-اسم المبلغة: ${fName}
-رقم التواصل: ${cPhone}
-رقم/يوزر المزعج: ${tUser}
-الكلية: ${cName}
-مكان الواقعة: ${cLoc}
-التفاصيل:
-${cDetails}
-
-[تم الإقرار بصحة البيانات والمسؤولية القانونية طبقا للمادة 305 من قانون العقوبات]`;
-
-                setTimeout(() => {
-                    const encodedMessage = encodeURIComponent(message);
-                    const whatsappUrl = `https://wa.me/${targetWhatsappNumber}?text=${encodedMessage}`;
-                    window.open(whatsappUrl, '_blank');
-                    
-                    collegeSubmitBtn.disabled = false;
-                    collegeSubmitBtnText.textContent = 'إرسال البلاغ لشؤون الطلاب عبر واتساب';
-
-                    modal.classList.remove('active');
-                    collegeReportForm.reset();
-                }, 2000);
+                }, 2500);
             });
         }
     </script>
