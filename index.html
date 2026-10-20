@@ -92,6 +92,8 @@
             transform: scale(0.9);
             transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
         }
 
         .modal-overlay.active .modal-box {
@@ -130,6 +132,75 @@
             font-size: 0.98rem;
             margin-bottom: 25px;
             line-height: 1.8;
+        }
+
+        /* Beta Welcome Banner Styles */
+        .beta-welcome-banner {
+            position: sticky;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: linear-gradient(135deg, #C5A059, #0B1F35);
+            color: #ffffff;
+            padding: 12px 25px;
+            z-index: 1050;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+            border-bottom: 2px solid #C5A059;
+            animation: slideDownBanner 0.4s ease-out;
+        }
+
+        @keyframes slideDownBanner {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .beta-banner-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.98rem;
+            font-weight: 700;
+            line-height: 1.5;
+            text-align: right;
+            flex: 1;
+            padding-left: 15px;
+        }
+
+        .beta-banner-content i {
+            font-size: 1.5rem;
+            color: #ffe680;
+            min-width: 30px;
+            text-align: center;
+        }
+
+        .beta-banner-close {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            color: #ffffff;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 1.1rem;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .beta-banner-close:hover {
+            background: #ffffff;
+            color: #0B1F35;
         }
 
         /* Header / Navbar */
@@ -796,7 +867,7 @@
         }
 
         .faq-item.active .faq-answer {
-            max-height: 250px;
+            max-height: 350px;
             padding: 0 22px 22px 22px;
         }
 
@@ -816,7 +887,9 @@
             font-size: 1rem;
             box-shadow: 0 4px 20px rgba(220, 38, 38, 0.4);
             z-index: 2000;
-            text-decoration: none;
+            cursor: pointer;
+            border: none;
+            outline: none;
             transition: all 0.3s ease;
             animation: pulse-red 2s infinite;
         }
@@ -944,6 +1017,42 @@
 </head>
 <body data-theme="dark">
 
+    <!-- Beta Access Lock Layer Overlay -->
+    <div class="modal-overlay active" id="betaLock" style="z-index: 9999; background: rgba(6, 18, 29, 0.98); backdrop-filter: blur(12px);">
+        <!-- Main Beta Box -->
+        <div class="modal-box" id="betaMainBox" style="text-align: center;">
+            <svg class="logo-emblem" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width: 65px; height: 65px; margin: 0 auto 15px;">
+                <circle cx="50" cy="50" r="48" fill="#0B1F35" stroke="#C5A059" stroke-width="3"/>
+                <path d="M50 20 C42 20 38 28 38 35 C38 42 45 45 50 50 C55 45 62 42 62 35 C62 28 58 20 50 20 Z" fill="#C5A059"/>
+                <path d="M30 55 L50 75 L70 55 C70 55 75 75 50 85 C25 75 30 55 30 55 Z" fill="#C5A059"/>
+                <rect x="44" y="42" width="12" height="15" fill="#ffffff"/>
+            </svg>
+            <h3 class="modal-title">الموقع تحت التجريب</h3>
+            <p class="modal-desc">المنصة حالياً في المرحلة التجريبية ومغلقة للجمهور، ومفتوحة للفريق التجريبي فقط.</p>
+            <button class="cta-btn" id="openBetaLoginBtn" style="width: 100%; justify-content: center;">تسجيل دخول الفريق التجريبي</button>
+        </div>
+
+        <!-- Password Input Beta Box -->
+        <div class="modal-box" id="betaLoginBox" style="display: none; text-align: right;">
+            <div style="text-align: center;">
+                <i class="fas fa-lock modal-icon"></i>
+            </div>
+            <h3 class="modal-title" style="text-align: center;">تسجيل دخول الفريق التجريبي</h3>
+            <p class="modal-desc" style="text-align: center; font-size: 0.92rem; margin-bottom: 20px;">للتأكد من أنك أحد أعضاء الفريق التجريبي، الرجاء إدخال كلمة السر</p>
+            
+            <div class="form-group" style="margin-bottom: 20px;">
+                <label for="betaPassword" style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-dark); font-size: 0.95rem;">كلمة السر <span class="required">*</span></label>
+                <input type="password" id="betaPassword" class="form-control" placeholder="أدخل كلمة السر">
+                <div class="error-message" id="betaErrorMsg" style="display: none;"><i class="fas fa-circle-exclamation"></i> كلمة السر غير صحيحة، يرجى المحاولة مرة أخرى</div>
+            </div>
+
+            <div style="display: flex; gap: 10px;">
+                <button type="button" class="cta-btn" id="betaBackBtn" style="flex: 1; justify-content: center; background: transparent; color: var(--text-dark); border-color: var(--border-color);">رجوع</button>
+                <button type="button" class="cta-btn" id="betaConfirmBtn" style="flex: 1; justify-content: center;">تأكيد</button>
+            </div>
+        </div>
+    </div>
+
     <!-- Startup Popup Disclaimer Modal -->
     <div class="modal-overlay active" id="startupPopup">
         <div class="modal-box" style="text-align: right;">
@@ -985,12 +1094,89 @@
         </div>
     </div>
 
+    <!-- Emergency Modal -->
+    <div class="modal-overlay" id="emergencyModal">
+        <div class="modal-box" style="text-align: right;">
+            <i class="fas fa-times modal-close-x" id="closeEmergencyX"></i>
+            <div style="text-align: center;">
+                <i class="fas fa-triangle-exclamation modal-icon" style="color: #dc2626;"></i>
+            </div>
+            <h3 class="modal-title" style="text-align: center; color: #dc2626;">بلاغ طوارئ - رئيس قسم C.A.D</h3>
+            
+            <div style="background: rgba(220, 38, 38, 0.1); border: 1px solid #dc2626; padding: 15px; border-radius: 8px; margin-bottom: 20px; font-size: 0.9rem; line-height: 1.6; color: var(--text-dark);">
+                <strong style="color: #dc2626; display: block; margin-bottom: 6px;"><i class="fas fa-circle-exclamation"></i> تنيه هام:</strong>
+                هذا الرقم مخصص للطوارئ المهمة فقط ويمنع استخدامه للاستفسارات.<br><br>
+                <strong style="color: #dc2626; display: block; margin-bottom: 4px;">إقرار قانوني:</strong>
+                المادة 305 من قانون العقوبات: كل من أخبر بأمر كاذب مع سوء القصد يستحق العقوبة بالحبس مدة لا تزيد على سنتين وغرامة. البلاغ الكاذب يعرض صاحبه للمساءلة القانونية.
+            </div>
+
+            <form id="emergencyForm" novalidate>
+                <div class="form-group">
+                    <label for="emergencyName">الاسم الكامل <span class="required">*</span></label>
+                    <input type="text" id="emergencyName" class="form-control" placeholder="أدخل اسمك الكامل">
+                    <div class="error-message"><i class="fas fa-circle-exclamation"></i> يرجى إدخال الاسم الكامل</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="emergencyPhone">رقم الهاتف <span class="required">*</span></label>
+                    <input type="tel" id="emergencyPhone" class="form-control" placeholder="أدخل رقم هاتفك للتواصل الفوري">
+                    <div class="error-message"><i class="fas fa-circle-exclamation"></i> يرجى إدخال رقم الهاتف</div>
+                </div>
+
+                <div class="form-group">
+                    <label for="emergencyType">نوع البلاغ الإلكتروني <span class="required">*</span></label>
+                    <select id="emergencyType" class="form-control">
+                        <option value="" disabled selected>اختر نوع البلاغ الطارئ...</option>
+                        <option value="ابتزاز إلكتروني">ابتزاز إلكتروني</option>
+                        <option value="نصب واحتيال مالي">نصب واحتيال مالي</option>
+                        <option value="انتحال شخصية وتشهير">انتحال شخصية وتشهير</option>
+                        <option value="تهديد وإزعاج إلكتروني">تهديد وإزعاج إلكتروني</option>
+                        <option value="أخرى">أخرى</option>
+                    </select>
+                    <div class="error-message"><i class="fas fa-circle-exclamation"></i> يرجى اختيار نوع البلاغ</div>
+                </div>
+
+                <div class="form-group" id="otherCrimeGroup" style="display: none;">
+                    <label for="emergencyOtherText">حدد نوع البلاغ الآخر <span class="required">*</span></label>
+                    <input type="text" id="emergencyOtherText" class="form-control" placeholder="اكتب نوع المشكلة بالتفصيل">
+                    <div class="error-message"><i class="fas fa-circle-exclamation"></i> يرجى كتابة نوع البلاغ</div>
+                </div>
+
+                <div class="form-group">
+                    <div class="legal-box" id="emergencyLegalBox">
+                        <input type="checkbox" id="emergencyAgreement" required>
+                        <label for="emergencyAgreement">
+                            أقر أنني قرأت التنويه وأوافق على تحمل المسؤولية القانونية في حالة البلاغ الكاذب طبقاً للمادة 305 عقوبات.
+                        </label>
+                    </div>
+                    <div class="error-message"><i class="fas fa-circle-exclamation"></i> يجب الموافقة على الإقرار للمتابعة</div>
+                </div>
+
+                <div style="display: flex; gap: 10px;">
+                    <button type="button" class="cta-btn" id="closeEmergencyBtn" style="flex: 1; justify-content: center; background: transparent; color: var(--text-dark); border-color: var(--border-color);">رجوع</button>
+                    <button type="submit" class="submit-btn" style="flex: 1; background: #dc2626; box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);">إرسال للطوارئ</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
     <!-- Floating Emergency Button -->
-    <a href="https://wa.me/201021431977?text=السلام%20عليكم%20-%20بلاغ%20طوارئ%20لرئيس%20قسم%20C.A.D%20-%20محتاج%20مساعدة%20فورية" target="_blank" class="emergency-btn-float" id="emergencyFloatBtn">
+    <button class="emergency-btn-float" id="emergencyFloatBtn">
         <i class="fab fa-whatsapp"></i>
         <span>طوارئ</span>
         <div class="emergency-tooltip">تواصل مباشر مع رئيس قسم C.A.D - طوارئ</div>
-    </a>
+    </button>
+
+    <!-- Beta Welcome Banner (Dynamic Injection / Display) -->
+    <div class="beta-welcome-banner" id="betaWelcomeBanner" style="display: none;">
+        <div class="beta-banner-content">
+            <i class="fas fa-star"></i>
+            <span>🎉 أهلاً بك في الفريق التجريبي لـ C.A.D - أنت الآن في وضع التجريب الكامل، يمكنك تجربة جميع المميزات وسيتم فتح الموقع للعامة قريباً. شكراً لمساعدتك في التطوير!</span>
+        </div>
+        <button class="beta-banner-close" id="closeBetaBannerBtn" title="إغلاق البانر">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
 
     <!-- Header / Navbar -->
     <header>
@@ -1213,47 +1399,47 @@
         <div class="faq-container">
             <div class="faq-item">
                 <div class="faq-question">
-                    <span>هل منصة C.A.D جهة حكومية؟</span>
+                    <span>هل منصة C.A.D جهة حكومية رسمية؟</span>
                     <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="faq-answer">
-                    لا، نحن مبادرة خاصة ومستقلة وليست جهة حكومية رسمية، هدفنا المساعدة والتوجيه بسرية.
+                    لا، منصة C.A.D هي مبادرة خاصة ومستقلة تماماً وليست تابعة لوزارة الداخلية أو أي جهة حكومية. نحن فريق تطوعي من المتخصصين في الأمن السيبراني والقانون، دورنا مساعدتك في توثيق الأدلة بشكل صحيح، تأمين حساباتك، وتوجيهك للطريق القانوني الرسمي لتقديم بلاغك في مباحث الإنترنت (108) أو عبر موقع وزارة الداخلية http://moi.gov.eg بأعلى درجات السرية.
                 </div>
             </div>
             <div class="faq-item">
                 <div class="faq-question">
-                    <span>هل بياناتي سرية؟</span>
+                    <span>هل بياناتي وبلاغي في سرية تامة؟</span>
                     <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="faq-answer">
-                    نعم 100% بسرية تامة ولا يتم نشرها.
+                    نعم، السرية هي أساس عملنا. جميع البلاغات مشفرة ولا يتم مشاركتها مع أي طرف ثالث نهائياً. لا نقوم بنشر أي تفاصيل أو أسماء، ويتم التعامل مع حالتك من قبل مختص واحد فقط لضمان الخصوصية الكاملة وحماية الضحية من أي ضغط أو تشهير.
                 </div>
             </div>
             <div class="faq-item">
                 <div class="faq-question">
-                    <span>كيف يتم التعامل مع البلاغ؟</span>
+                    <span>كيف يتم التعامل مع بلاغي بعد الإرسال؟</span>
                     <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="faq-answer">
-                    يتم توثيقه وتحليله وتوجيهك للخطوات الصحيحة والرسمية.
+                    يمر بلاغك بـ 4 مراحل احترافية: 1- التوثيق: نحافظ على الأدلة الرقمية (سكرين شوت، روابط، محادثات) بطريقة قانونية صحيحة. 2- التحليل: نحدد نوع الجريمة والثغرة المستخدمة. 3- التوجيه: نرسل لك خطة عمل واضحة بخطوات تأمين حسابك والخطوات القانونية. 4- المتابعة: نبقى معك على واتساب حتى يتم حل المشكلة وتأمينك بالكامل.
                 </div>
             </div>
             <div class="faq-item">
                 <div class="faq-question">
-                    <span>هل الخدمة مجانية؟</span>
+                    <span>هل خدماتكم مجانية فعلاً؟</span>
                     <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="faq-answer">
-                    نعم، الدعم تطوعي ومجاني بالكامل.
+                    نعم 100%، جميع خدمات الدعم الفني والتوجيه القانوني المبدئي مجانية بالكامل لأننا مبادرة تطوعية هدفها حماية المجتمع من الجرائم الإلكترونية. لا نطلب أي رسوم أو تحويلات مالية مقابل المساعدة، وأي شخص يطلب منك مال باسم C.A.D فهو محتال.
                 </div>
             </div>
             <div class="faq-item">
                 <div class="faq-question">
-                    <span>ماذا أفعل في حالة الطوارئ؟</span>
+                    <span>متى أستخدم زر طوارئ رئيس قسم C.A.D؟</span>
                     <i class="fas fa-chevron-down"></i>
                 </div>
                 <div class="faq-answer">
-                    استخدم زر طوارئ رئيس قسم C.A.D للتواصل الفوري.
+                    زر الطوارئ مخصص فقط للحالات الخطيرة والعاجلة جداً التي لا تحتمل التأخير، مثل: ابتزاز لحظي بتهديد بنشر الصور الآن، تهديد مباشر على الحياة، أو اختراق لحظي لحساب بنكي. هذا الزر يوصلك مباشرة برئيس القسم للتدخل الفوري، لذلك ممنوع استخدامه للاستفسارات العادية حتى نترك الخط مفتوح للحالات الحرجة.
                 </div>
             </div>
         </div>
@@ -1267,11 +1453,105 @@
 
     <!-- Scripts -->
     <script>
+        // Beta Access & Welcome Banner Logic
+        const betaLock = document.getElementById('betaLock');
+        const betaMainBox = document.getElementById('betaMainBox');
+        const betaLoginBox = document.getElementById('betaLoginBox');
+        const openBetaLoginBtn = document.getElementById('openBetaLoginBtn');
+        const betaBackBtn = document.getElementById('betaBackBtn');
+        const betaConfirmBtn = document.getElementById('betaConfirmBtn');
+        const betaPassword = document.getElementById('betaPassword');
+        const betaErrorMsg = document.getElementById('betaErrorMsg');
+        const betaWelcomeBanner = document.getElementById('betaWelcomeBanner');
+        const closeBetaBannerBtn = document.getElementById('closeBetaBannerBtn');
+
+        function checkBetaAccessState() {
+            if (localStorage.getItem('cad_beta_access') === 'true') {
+                if (betaLock) {
+                    betaLock.classList.remove('active');
+                    betaLock.style.display = 'none';
+                }
+                if (sessionStorage.getItem('betaWelcomeSeen') !== 'true') {
+                    if (betaWelcomeBanner) betaWelcomeBanner.style.display = 'flex';
+                }
+            } else {
+                if (betaLock) betaLock.classList.add('active');
+                if (betaWelcomeBanner) betaWelcomeBanner.style.display = 'none';
+            }
+        }
+
+        checkBetaAccessState();
+
+        if (openBetaLoginBtn) {
+            openBetaLoginBtn.addEventListener('click', () => {
+                betaMainBox.style.display = 'none';
+                betaLoginBox.style.display = 'block';
+                if (betaPassword) betaPassword.focus();
+            });
+        }
+
+        if (betaBackBtn) {
+            betaBackBtn.addEventListener('click', () => {
+                betaLoginBox.style.display = 'none';
+                betaMainBox.style.display = 'block';
+                if (betaPassword) betaPassword.value = '';
+                if (betaErrorMsg) betaErrorMsg.style.display = 'none';
+                betaPassword.parentElement.classList.remove('invalid');
+            });
+        }
+
+        function handleBetaLogin() {
+            const pwd = betaPassword ? betaPassword.value.trim() : '';
+            if (pwd === 'CAD@2026') {
+                localStorage.setItem('cad_beta_access', 'true');
+                if (betaLock) {
+                    betaLock.classList.remove('active');
+                    setTimeout(() => {
+                        betaLock.style.display = 'none';
+                    }, 300);
+                }
+                if (sessionStorage.getItem('betaWelcomeSeen') !== 'true') {
+                    if (betaWelcomeBanner) betaWelcomeBanner.style.display = 'flex';
+                }
+            } else {
+                if (betaErrorMsg) betaErrorMsg.style.display = 'flex';
+                if (betaPassword) {
+                    betaPassword.parentElement.classList.add('invalid');
+                }
+            }
+        }
+
+        if (betaConfirmBtn) {
+            betaConfirmBtn.addEventListener('click', handleBetaLogin);
+        }
+
+        if (betaPassword) {
+            betaPassword.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    handleBetaLogin();
+                }
+            });
+            betaPassword.addEventListener('input', () => {
+                betaPassword.parentElement.classList.remove('invalid');
+                if (betaErrorMsg) betaErrorMsg.style.display = 'none';
+            });
+        }
+
+        if (closeBetaBannerBtn) {
+            closeBetaBannerBtn.addEventListener('click', () => {
+                if (betaWelcomeBanner) betaWelcomeBanner.style.display = 'none';
+                sessionStorage.setItem('betaWelcomeSeen', 'true');
+            });
+        }
+
         // Startup Popup Logic
         const startupPopup = document.getElementById('startupPopup');
         const closeStartupBtn = document.getElementById('closeStartupBtn');
         const closeStartupX = document.getElementById('closeStartupX');
         const emergencyFloatBtn = document.getElementById('emergencyFloatBtn');
+        const emergencyModal = document.getElementById('emergencyModal');
+        const closeEmergencyBtn = document.getElementById('closeEmergencyBtn');
+        const closeEmergencyX = document.getElementById('closeEmergencyX');
 
         function updateEmergencyButtonVisibility() {
             if (startupPopup && startupPopup.classList.contains('active')) {
@@ -1295,6 +1575,44 @@
 
         if (closeStartupBtn) closeStartupBtn.addEventListener('click', closeStartupModal);
         if (closeStartupX) closeStartupX.addEventListener('click', closeStartupModal);
+
+        // Emergency Modal Open/Close Logic
+        if (emergencyFloatBtn) {
+            emergencyFloatBtn.addEventListener('click', () => {
+                if (emergencyModal) emergencyModal.classList.add('active');
+            });
+        }
+
+        function closeEmergencyModalFunc() {
+            if (emergencyModal) emergencyModal.classList.remove('active');
+        }
+
+        if (closeEmergencyBtn) closeEmergencyBtn.addEventListener('click', closeEmergencyModalFunc);
+        if (closeEmergencyX) closeEmergencyX.addEventListener('click', closeEmergencyModalFunc);
+
+        if (emergencyModal) {
+            emergencyModal.addEventListener('click', (e) => {
+                if (e.target === emergencyModal) closeEmergencyModalFunc();
+            });
+        }
+
+        // Emergency Crime Type Select Change Logic (Other Input)
+        const emergencyTypeSelect = document.getElementById('emergencyType');
+        const otherCrimeGroup = document.getElementById('otherCrimeGroup');
+        const emergencyOtherText = document.getElementById('emergencyOtherText');
+
+        if (emergencyTypeSelect) {
+            emergencyTypeSelect.addEventListener('change', () => {
+                emergencyTypeSelect.parentElement.classList.remove('invalid');
+                if (emergencyTypeSelect.value === 'أخرى') {
+                    otherCrimeGroup.style.display = 'block';
+                } else {
+                    otherCrimeGroup.style.display = 'none';
+                    emergencyOtherText.value = '';
+                    otherCrimeGroup.classList.remove('invalid');
+                }
+            });
+        }
 
         // Campus Harassment Modal Logic
         const campusNavLink = document.getElementById('campusNavLink');
@@ -1404,7 +1722,81 @@
 
         revealItems.forEach(item => revealObserver.observe(item));
 
-        // Form Validation & Submission with Auto Tracking ID
+        // Emergency Form Validation & Submission
+        const emergencyForm = document.getElementById('emergencyForm');
+        const emergencyNameInput = document.getElementById('emergencyName');
+        const emergencyPhoneInput = document.getElementById('emergencyPhone');
+        const emergencyAgreementInput = document.getElementById('emergencyAgreement');
+
+        ['emergencyName', 'emergencyPhone', 'emergencyOtherText'].forEach(id => {
+            const input = document.getElementById(id);
+            if (input) {
+                input.addEventListener('input', () => {
+                    input.parentElement.classList.remove('invalid');
+                });
+            }
+        });
+
+        if (emergencyAgreementInput) {
+            emergencyAgreementInput.addEventListener('change', () => {
+                emergencyAgreementInput.closest('.form-group').classList.remove('invalid');
+            });
+        }
+
+        if (emergencyForm) {
+            emergencyForm.addEventListener('submit', function(e) {
+                e.preventDefault();
+
+                let isValid = true;
+
+                if (!emergencyNameInput.value.trim()) {
+                    emergencyNameInput.parentElement.classList.add('invalid');
+                    isValid = false;
+                }
+
+                if (!emergencyPhoneInput.value.trim()) {
+                    emergencyPhoneInput.parentElement.classList.add('invalid');
+                    isValid = false;
+                }
+
+                if (!emergencyTypeSelect.value) {
+                    emergencyTypeSelect.parentElement.classList.add('invalid');
+                    isValid = false;
+                }
+
+                if (emergencyTypeSelect.value === 'أخرى' && !emergencyOtherText.value.trim()) {
+                    otherCrimeGroup.classList.add('invalid');
+                    isValid = false;
+                }
+
+                if (!emergencyAgreementInput.checked) {
+                    emergencyAgreementInput.closest('.form-group').classList.add('invalid');
+                    isValid = false;
+                }
+
+                if (!isValid) return;
+
+                const eName = emergencyNameInput.value.trim();
+                const ePhone = emergencyPhoneInput.value.trim();
+                let eType = emergencyTypeSelect.value;
+                if (eType === 'أخرى') {
+                    eType = `أخرى (${emergencyOtherText.value.trim()})`;
+                }
+
+                const emergencyWhatsappNumber = "201021431977";
+                const message = `[بلاغ طوارئ - C.A.D] الاسم: ${eName} - الرقم: ${ePhone} - النوع: ${eType} - إقرار المسؤولية: مُقر بصحة البيانات ومسؤوليتي القانونية طبقاً للمادة 305 عقوبات`;
+
+                const encodedMessage = encodeURIComponent(message);
+                const whatsappUrl = `https://wa.me/${emergencyWhatsappNumber}?text=${encodedMessage}`;
+                window.open(whatsappUrl, '_blank');
+
+                emergencyModal.classList.remove('active');
+                emergencyForm.reset();
+                otherCrimeGroup.style.display = 'none';
+            });
+        }
+
+        // Form Validation & Submission with Auto Tracking ID (Main Report Form)
         const reportForm = document.getElementById('reportForm');
         const submitBtn = document.getElementById('submitBtn');
         const submitBtnText = document.getElementById('submitBtnText');
