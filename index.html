@@ -134,75 +134,6 @@
             line-height: 1.8;
         }
 
-        /* Beta Welcome Banner Styles */
-        .beta-welcome-banner {
-            position: sticky;
-            top: 0;
-            left: 0;
-            width: 100%;
-            background: linear-gradient(135deg, #C5A059, #0B1F35);
-            color: #ffffff;
-            padding: 12px 25px;
-            z-index: 1050;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
-            border-bottom: 2px solid #C5A059;
-            animation: slideDownBanner 0.4s ease-out;
-        }
-
-        @keyframes slideDownBanner {
-            from {
-                transform: translateY(-100%);
-                opacity: 0;
-            }
-            to {
-                transform: translateY(0);
-                opacity: 1;
-            }
-        }
-
-        .beta-banner-content {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            font-size: 0.98rem;
-            font-weight: 700;
-            line-height: 1.5;
-            text-align: right;
-            flex: 1;
-            padding-left: 15px;
-        }
-
-        .beta-banner-content i {
-            font-size: 1.5rem;
-            color: #ffe680;
-            min-width: 30px;
-            text-align: center;
-        }
-
-        .beta-banner-close {
-            background: rgba(255, 255, 255, 0.15);
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            color: #ffffff;
-            width: 34px;
-            height: 34px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            font-size: 1.1rem;
-            transition: all 0.2s ease;
-            flex-shrink: 0;
-        }
-
-        .beta-banner-close:hover {
-            background: #ffffff;
-            color: #0B1F35;
-        }
-
         /* Header / Navbar */
         header {
             position: sticky;
@@ -1017,42 +948,6 @@
 </head>
 <body data-theme="dark">
 
-    <!-- Beta Access Lock Layer Overlay -->
-    <div class="modal-overlay active" id="betaLock" style="z-index: 9999; background: rgba(6, 18, 29, 0.98); backdrop-filter: blur(12px);">
-        <!-- Main Beta Box -->
-        <div class="modal-box" id="betaMainBox" style="text-align: center;">
-            <svg class="logo-emblem" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" style="width: 65px; height: 65px; margin: 0 auto 15px;">
-                <circle cx="50" cy="50" r="48" fill="#0B1F35" stroke="#C5A059" stroke-width="3"/>
-                <path d="M50 20 C42 20 38 28 38 35 C38 42 45 45 50 50 C55 45 62 42 62 35 C62 28 58 20 50 20 Z" fill="#C5A059"/>
-                <path d="M30 55 L50 75 L70 55 C70 55 75 75 50 85 C25 75 30 55 30 55 Z" fill="#C5A059"/>
-                <rect x="44" y="42" width="12" height="15" fill="#ffffff"/>
-            </svg>
-            <h3 class="modal-title">الموقع تحت التجريب</h3>
-            <p class="modal-desc">المنصة حالياً في المرحلة التجريبية ومغلقة للجمهور، ومفتوحة للفريق التجريبي فقط.</p>
-            <button class="cta-btn" id="openBetaLoginBtn" style="width: 100%; justify-content: center;">تسجيل دخول الفريق التجريبي</button>
-        </div>
-
-        <!-- Password Input Beta Box -->
-        <div class="modal-box" id="betaLoginBox" style="display: none; text-align: right;">
-            <div style="text-align: center;">
-                <i class="fas fa-lock modal-icon"></i>
-            </div>
-            <h3 class="modal-title" style="text-align: center;">تسجيل دخول الفريق التجريبي</h3>
-            <p class="modal-desc" style="text-align: center; font-size: 0.92rem; margin-bottom: 20px;">للتأكد من أنك أحد أعضاء الفريق التجريبي، الرجاء إدخال كلمة السر</p>
-            
-            <div class="form-group" style="margin-bottom: 20px;">
-                <label for="betaPassword" style="display: block; margin-bottom: 8px; font-weight: 600; color: var(--text-dark); font-size: 0.95rem;">كلمة السر <span class="required">*</span></label>
-                <input type="password" id="betaPassword" class="form-control" placeholder="أدخل كلمة السر">
-                <div class="error-message" id="betaErrorMsg" style="display: none;"><i class="fas fa-circle-exclamation"></i> كلمة السر غير صحيحة، يرجى المحاولة مرة أخرى</div>
-            </div>
-
-            <div style="display: flex; gap: 10px;">
-                <button type="button" class="cta-btn" id="betaBackBtn" style="flex: 1; justify-content: center; background: transparent; color: var(--text-dark); border-color: var(--border-color);">رجوع</button>
-                <button type="button" class="cta-btn" id="betaConfirmBtn" style="flex: 1; justify-content: center;">تأكيد</button>
-            </div>
-        </div>
-    </div>
-
     <!-- Startup Popup Disclaimer Modal -->
     <div class="modal-overlay active" id="startupPopup">
         <div class="modal-box" style="text-align: right;">
@@ -1166,17 +1061,6 @@
         <span>طوارئ</span>
         <div class="emergency-tooltip">تواصل مباشر مع رئيس قسم C.A.D - طوارئ</div>
     </button>
-
-    <!-- Beta Welcome Banner (Dynamic Injection / Display) -->
-    <div class="beta-welcome-banner" id="betaWelcomeBanner" style="display: none;">
-        <div class="beta-banner-content">
-            <i class="fas fa-star"></i>
-            <span>🎉 أهلاً بك في الفريق التجريبي لـ C.A.D - أنت الآن في وضع التجريب الكامل، يمكنك تجربة جميع المميزات وسيتم فتح الموقع للعامة قريباً. شكراً لمساعدتك في التطوير!</span>
-        </div>
-        <button class="beta-banner-close" id="closeBetaBannerBtn" title="إغلاق البانر">
-            <i class="fas fa-times"></i>
-        </button>
-    </div>
 
     <!-- Header / Navbar -->
     <header>
@@ -1453,95 +1337,62 @@
 
     <!-- Scripts -->
     <script>
-        // Beta Access & Welcome Banner Logic
-        const betaLock = document.getElementById('betaLock');
-        const betaMainBox = document.getElementById('betaMainBox');
-        const betaLoginBox = document.getElementById('betaLoginBox');
-        const openBetaLoginBtn = document.getElementById('openBetaLoginBtn');
-        const betaBackBtn = document.getElementById('betaBackBtn');
-        const betaConfirmBtn = document.getElementById('betaConfirmBtn');
-        const betaPassword = document.getElementById('betaPassword');
-        const betaErrorMsg = document.getElementById('betaErrorMsg');
-        const betaWelcomeBanner = document.getElementById('betaWelcomeBanner');
-        const closeBetaBannerBtn = document.getElementById('closeBetaBannerBtn');
+        // Admin Bypass Logic
+        const ADMIN_SECRET = "CAD2026";
+        if (new URLSearchParams(window.location.search).get('admin') === ADMIN_SECRET) {
+            localStorage.setItem('cad_owner_access', 'true');
+            window.history.replaceState({}, document.title, window.location.pathname);
+        }
 
-        function checkBetaAccessState() {
-            if (localStorage.getItem('cad_beta_access') === 'true') {
-                if (betaLock) {
-                    betaLock.classList.remove('active');
-                    betaLock.style.display = 'none';
-                }
-                if (sessionStorage.getItem('betaWelcomeSeen') !== 'true') {
-                    if (betaWelcomeBanner) betaWelcomeBanner.style.display = 'flex';
-                }
-            } else {
-                if (betaLock) betaLock.classList.add('active');
-                if (betaWelcomeBanner) betaWelcomeBanner.style.display = 'none';
+        const isOwner = localStorage.getItem('cad_owner_access') === 'true';
+        let timerInterval = null;
+
+        if (isOwner) {
+            // If owner, don't show lock screen
+            const lock = document.getElementById('fullScreenLock');
+            if (lock) lock.remove();
+        } else {
+            // Global Launch Timer Full-Screen Lock Logic for regular visitors
+            const GLOBAL_LAUNCH_TIME = new Date('2026-10-21T19:30:00+03:00').getTime();
+
+            let lockScreen = document.getElementById('fullScreenLock');
+            if (!lockScreen) {
+                lockScreen = document.createElement('div');
+                lockScreen.id = 'fullScreenLock';
+                lockScreen.style.cssText = 'position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #0B1F35; z-index: 9999; display: flex; align-items: center; justify-content: center; flex-direction: column; color: #C5A059; text-align: center; padding: 20px; font-family: Cairo, sans-serif;';
+                lockScreen.innerHTML = `
+                    <i class="fas fa-clock" style="font-size: 4rem; margin-bottom: 20px; color: #C5A059;"></i>
+                    <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 15px; color: #ffffff;">الموقع مغلق حاليا</h2>
+                    <span id="countdownText" style="font-size: 2rem; font-weight: 800; margin: 15px 0; color: #C5A059;">جاري التحقق من وقت الإطلاق...</span>
+                    <p style="font-size: 1.1rem; color: #94a3b8; max-width: 500px; line-height: 1.6; margin-top: 10px;">سيتم فتح المنصة تلقائيا في تمام الساعة 7:30 مساء بتوقيت القاهرة</p>
+                `;
+                document.body.prepend(lockScreen);
             }
-        }
 
-        checkBetaAccessState();
+            const countdownText = document.getElementById('countdownText');
 
-        if (openBetaLoginBtn) {
-            openBetaLoginBtn.addEventListener('click', () => {
-                betaMainBox.style.display = 'none';
-                betaLoginBox.style.display = 'block';
-                if (betaPassword) betaPassword.focus();
-            });
-        }
+            function checkLaunchTimer() {
+                const diff = GLOBAL_LAUNCH_TIME - Date.now();
 
-        if (betaBackBtn) {
-            betaBackBtn.addEventListener('click', () => {
-                betaLoginBox.style.display = 'none';
-                betaMainBox.style.display = 'block';
-                if (betaPassword) betaPassword.value = '';
-                if (betaErrorMsg) betaErrorMsg.style.display = 'none';
-                betaPassword.parentElement.classList.remove('invalid');
-            });
-        }
+                if (diff > 0) {
+                    const totalSeconds = Math.floor(diff / 1000);
+                    const hours = Math.floor(totalSeconds / 3600);
+                    const minutes = Math.floor((totalSeconds % 3600) / 60);
+                    const seconds = totalSeconds % 60;
 
-        function handleBetaLogin() {
-            const pwd = betaPassword ? betaPassword.value.trim() : '';
-            if (pwd === 'CAD@2026') {
-                localStorage.setItem('cad_beta_access', 'true');
-                if (betaLock) {
-                    betaLock.classList.remove('active');
-                    setTimeout(() => {
-                        betaLock.style.display = 'none';
-                    }, 300);
-                }
-                if (sessionStorage.getItem('betaWelcomeSeen') !== 'true') {
-                    if (betaWelcomeBanner) betaWelcomeBanner.style.display = 'flex';
-                }
-            } else {
-                if (betaErrorMsg) betaErrorMsg.style.display = 'flex';
-                if (betaPassword) {
-                    betaPassword.parentElement.classList.add('invalid');
+                    if (countdownText) {
+                        countdownText.textContent = `الموقع سيفتح بعد: ${hours} ساعة ${minutes} دقيقة ${seconds} ثانية`;
+                    }
+                } else {
+                    if (lockScreen) {
+                        lockScreen.remove();
+                    }
+                    if (timerInterval) clearInterval(timerInterval);
                 }
             }
-        }
 
-        if (betaConfirmBtn) {
-            betaConfirmBtn.addEventListener('click', handleBetaLogin);
-        }
-
-        if (betaPassword) {
-            betaPassword.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    handleBetaLogin();
-                }
-            });
-            betaPassword.addEventListener('input', () => {
-                betaPassword.parentElement.classList.remove('invalid');
-                if (betaErrorMsg) betaErrorMsg.style.display = 'none';
-            });
-        }
-
-        if (closeBetaBannerBtn) {
-            closeBetaBannerBtn.addEventListener('click', () => {
-                if (betaWelcomeBanner) betaWelcomeBanner.style.display = 'none';
-                sessionStorage.setItem('betaWelcomeSeen', 'true');
-            });
+            checkLaunchTimer();
+            timerInterval = setInterval(checkLaunchTimer, 1000);
         }
 
         // Startup Popup Logic
